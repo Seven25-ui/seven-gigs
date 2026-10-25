@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Seven Gigs | AI tips para sa Pinoy freelancers</title>
+  <meta name="description" content="Tips, AI tools, ug tutorials para sa Pinoy freelancers, gikan sa tinuod nga Upwork experience.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="index.html"><i></i>Seven Gigs</a>
+      <nav><a href="admin.html">Admin</a></nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>Mas paspas ang trabaho kung naay AI.</h1>
+      <p>Tips, AI tools, ug tutorials para sa Pinoy freelancers. Gikan sa tinuod nga Upwork experience, dili teorya.</p>
+    </section>
+
+    <div class="filters" id="filters" role="group" aria-label="Filter by category"></div>
+    <div class="list" id="list" aria-live="polite"><p class="empty">Gikarga pa ang mga posts...</p></div>
+  </main>
+
+  <footer>
+    <div class="wrap">Seven Gigs</div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
+  <script src="app.js"></script>
+  <script>
+    let posts = [];
+    let active = "All";
+
+    function renderFilters() {
+      const box = document.getElementById("filters");
+      box.innerHTML = ["All", ...CATEGORIES].map(c =>
+        `<button class="chip" aria-pressed="${c === active}" data-c="${esc(c)}">${esc(c)}</button>`
+      ).join("");
+      box.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+        active = b.dataset.c;
+        renderFilters();
+        renderList();
+      }));
+    }
+
+    function renderList() {
+      const list = document.getElementById("list");
+      const shown = active === "All" ? posts : posts.filter(p => p.category === active);
+      if (!shown.length) {
+        list.innerHTML = '<p class="empty">Wala pa\'y posts dinhi. Balik-balik ra ha!</p>';
+        return;
+      }
+      list.innerHTML = shown.map(p => `
+        <a class="row" href="post.html?id=${encodeURIComponent(p.id)}">
+          <span class="tag">${esc(p.category)}</span>
+          <div>
+            <h2>${esc(p.title)}</h2>
+            <p>${esc(p.excerpt || "")}</p>
+          </div>
+          <time datetime="${esc(p.created_at)}">${fmtDate(p.created_at)}</time>
+        </a>`).join("");
+    }
+
+    async function load() {
+      const { data, error } = await sb
+        .from("gigs_posts")
+        .select("id,title,category,excerpt,created_at")
+        .eq("published", true)
+        .order("created_at", { ascending: false });
+      if (error) {
+        document.getElementById("list").innerHTML =
+          '<p class="empty">Dili makarga ang posts. Susiha ang Supabase URL ug key sa app.js.</p>';
+        return;
+      }
+      posts = data || [];
+      renderFilters();
+      renderList();
+    }
+
+    renderFilters();
+    load();
+  </script>
+</body>
+</html>

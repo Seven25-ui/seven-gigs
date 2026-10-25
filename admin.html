@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Admin | Seven Gigs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="index.html"><i></i>Seven Gigs</a>
+      <nav><a href="index.html">Tan-awa ang site</a></nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- LOGIN -->
+    <section class="panel" id="loginBox">
+      <h2>Admin login</h2>
+      <label for="email">Email</label>
+      <input type="email" id="email" autocomplete="username">
+      <label for="password">Password</label>
+      <input type="password" id="password" autocomplete="current-password">
+      <button class="btn" id="loginBtn">Log in</button>
+      <div class="msg err" id="loginMsg"></div>
+    </section>
+
+    <!-- EDITOR + LIST -->
+    <div id="app" class="hidden">
+      <section class="panel">
+        <h2 id="formTitle">Bag-ong post</h2>
+        <label for="title">Title</label>
+        <input type="text" id="title">
+        <label for="category">Category</label>
+        <select id="category"></select>
+        <label for="excerpt">Mubo nga description (makita sa homepage)</label>
+        <input type="text" id="excerpt">
+        <label for="content">Content</label>
+        <textarea id="content" placeholder="Sulati ang imong post dinhi.&#10;&#10;Blank line = bag-ong paragraph.&#10;&#10;## Ang heading kay ingon niini"></textarea>
+        <label class="check"><input type="checkbox" id="published" checked> Ipakita sa public (published)</label>
+        <button class="btn" id="saveBtn">Publish</button>
+        <button class="btn ghost hidden" id="cancelBtn">Cancel edit</button>
+        <button class="btn ghost" id="logoutBtn">Log out</button>
+        <div class="msg" id="formMsg"></div>
+      </section>
+
+      <h2>Imong mga posts</h2>
+      <div id="adminList"></div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
+  <script src="app.js"></script>
+  <script>
+    const $ = id => document.getElementById(id);
+    let editingId = null;
+    let allPosts = [];
+
+    $("category").innerHTML = CATEGORIES.map(c => `<option>${esc(c)}</option>`).join("");
+
+    function setMsg(el, text, kind) {
+      el.textContent = text || "";
+      el.className = "msg" + (kind ? " " + kind : "");
+    }
+
+    function showApp(on) {
+      $("loginBox").classList.toggle("hidden", on);
+      $("app").classList.toggle("hidden", !on);
+      if (on) loadPosts();
+    }
+
+    async function login() {
+      setMsg($("loginMsg"), "");
+      const { error } = await sb.auth.signInWithPassword({
+        email: $("email").value.trim(),
+        password: $("password").value
+      });
+      if (error) setMsg($("loginMsg"), "Dili maka-login: " + error.message, "err");
+      else showApp(true);
+    }
+
+    async function logout() {
+      await sb.auth.signOut();
+      showApp(false);
+    }
+
+    function resetForm() {
+      editingId = null;
+      $("formTitle").textContent = "Bag-ong post";
+      $("title").value = "";
+      $("excerpt").value = "";
+      $("content").value = "";
+      $("published").checked = true;
+      $("category").selectedIndex = 0;
+      $("saveBtn").textContent = "Publish";
+      $("cancelBtn").classList.add("hidden");
+    }
+
+    async function loadPosts() {
+      const { data, error } = await sb
+        .from("gigs_posts")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if (error) { $("adminList").innerHTML = '<p class="empty">Dili makarga: ' + esc(error.message) + "</p>"; return; }
+      allPosts = data || [];
+      if (!allPosts.length) { $("adminList").innerHTML = '<p class="empty">Wala pa\'y posts. Himoa ang imong una sa ibabaw.</p>'; return; }
+      $("adminList").innerHTML = allPosts.map(p => `
+        <div class="admin-row">
+          <div>
+            <strong>${esc(p.title)}</strong>
+            <span>${esc(p.category)} - ${fmtDate(p.created_at)} - ${p.published ? "Published" : "Draft"}</span>
+          </div>
+          <div>
+            <button class="btn small ghost" data-edit="${esc(p.id)}">Edit</button>
+            <button class="btn small danger" data-del="${esc(p.id)}">Delete</button>
+          </div>
+        </div>`).join("");
+      $("adminList").querySelectorAll("[data-edit]").forEach(b => b.addEventListener("click", () => startEdit(b.dataset.edit)));
+      $("adminList").querySelectorAll("[data-del]").forEach(b => b.addEventListener("click", () => removePost(b.dataset.del)));
+    }
+
+    function startEdit(id) {
+      const p = allPosts.find(x => x.id === id);
+      if (!p) return;
+      editingId = id;
+      $("formTitle").textContent = "I-edit ang post";
+      $("title").value = p.title;
+      $("category").value = p.category;
+      $("excerpt").value = p.excerpt || "";
+      $("content").value = p.content;
+      $("published").checked = p.published;
+      $("saveBtn").textContent = "Save changes";
+      $("cancelBtn").classList.remove("hidden");
+      setMsg($("formMsg"), "");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    async function savePost() {
+      const row = {
+        title: $("title").value.trim(),
+        category: $("category").value,
+        excerpt: $("excerpt").value.trim(),
+        content: $("content").value,
+        published: $("published").checked
+      };
+      if (!row.title || !row.content.trim()) {
+        setMsg($("formMsg"), "Kinahanglan naay title ug content.", "err");
+        return;
+      }
+      const q = editingId
+        ? sb.from("gigs_posts").update(row).eq("id", editingId)
+        : sb.from("gigs_posts").insert(row);
+      const { error } = await q;
+      if (error) { setMsg($("formMsg"), "Wala na-save: " + error.message, "err"); return; }
+      setMsg($("formMsg"), editingId ? "Na-save na ang changes." : "Na-publish na ang post.", "ok");
+      resetForm();
+      loadPosts();
+    }
+
+    async function removePost(id) {
+      if (!confirm("I-delete gyud ni nga post? Dili na ni mabalik.")) return;
+      const { error } = await sb.from("gigs_posts").delete().eq("id", id);
+      if (error) { setMsg($("formMsg"), "Wala na-delete: " + error.message, "err"); return; }
+      if (editingId === id) resetForm();
+      loadPosts();
+    }
+
+    $("loginBtn").addEventListener("click", login);
+    $("password").addEventListener("keydown", e => { if (e.key === "Enter") login(); });
+    $("logoutBtn").addEventListener("click", logout);
+    $("saveBtn").addEventListener("click", savePost);
+    $("cancelBtn").addEventListener("click", () => { resetForm(); setMsg($("formMsg"), ""); });
+
+    sb.auth.getSession().then(({ data }) => showApp(!!data.session));
+  </script>
+</body>
+</html>
