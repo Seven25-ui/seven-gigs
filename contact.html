@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact | Seven Gigs</title>
+  <meta name="description" content="Contact Seven Gigs with questions, corrections, or ideas for new posts.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="index.html"><i></i>Seven Gigs</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+      <nav aria-label="Main" id="mainNav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" aria-current="page">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap page">
+    <h1>Contact</h1>
+    <div class="meta">Questions, corrections, or post ideas are welcome.</div>
+
+    <div class="body">
+      <p>The best way to reach me is by email:</p>
+      <p><a href="mailto:YOUR_EMAIL_HERE">YOUR_EMAIL_HERE</a></p>
+      <p>I read every message and usually reply within a few days. Please include a link to the post you're writing about, if there is one.</p>
+
+      <h2>Good reasons to write</h2>
+      <ul>
+        <li>You found a mistake or an outdated tip in a post.</li>
+        <li>You'd like me to cover a tool or topic.</li>
+        <li>You have a question about a tutorial.</li>
+      </ul>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div>
+        <a class="logo" href="index.html"><i></i>Seven Gigs</a>
+        <p>Tips, AI tools, and tutorials for freelancers.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms &amp; Disclaimer</a>
+      </nav>
+    </div>
+    <div class="wrap copy">&copy; <span id="yr">2026</span> Seven Gigs. All rights reserved.</div>
+  </footer>
+  <script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+  <script src="menu.js"></script>
+</body>
+</html>
