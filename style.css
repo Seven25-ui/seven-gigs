@@ -134,3 +134,8 @@ textarea { min-height: 18rem; resize: vertical; font-family: ui-monospace, Conso
 .search { margin-top: 1rem; }
 .search input { width: 100%; max-width: 28rem; font: inherit; padding: .65rem .9rem; border: 2px solid var(--ink); background: var(--paper); color: var(--ink); border-radius: 0; }
 .search input::placeholder { color: var(--mute); }
+
+/* code blocks inside posts */
+.body pre { background: var(--ink); color: #f3f5f9; padding: 1rem 1.1rem; overflow-x: auto; margin: 0 0 1.4rem; font-size: .92rem; line-height: 1.55; }
+.body code { font-family: ui-monospace, Consolas, "Courier New", monospace; }
+.body pre code { font-size: inherit; }
