@@ -13,46 +13,71 @@
   <header class="top">
     <div class="wrap">
       <a class="logo" href="index.html"><i></i>Seven Gigs</a>
-      <nav><a href="admin.html">Admin</a></nav>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+      <nav aria-label="Main" id="mainNav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
     </div>
   </header>
 
   <main class="wrap post" id="post">
-    <p class="empty">Gikarga pa...</p>
+    <p class="empty">Loading...</p>
   </main>
 
-  <footer>
-    <div class="wrap">Seven Gigs</div>
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div>
+        <a class="logo" href="index.html"><i></i>Seven Gigs</a>
+        <p>Tips, AI tools, and tutorials for freelancers.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms &amp; Disclaimer</a>
+      </nav>
+    </div>
+    <div class="wrap copy">&copy; <span id="yr">2026</span> Seven Gigs. All rights reserved.</div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
   <script src="app.js"></script>
   <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+
     (async function () {
       const box = document.getElementById("post");
+      const notFound = '<a class="back" href="index.html">&larr; Back to all posts</a><p class="empty">This post could not be found.</p>';
       const id = new URLSearchParams(location.search).get("id");
-      if (!id) { box.innerHTML = '<a class="back" href="index.html">&larr; Balik sa tanan nga posts</a><p class="empty">Wala makita ang post.</p>'; return; }
+      if (!id) { box.innerHTML = notFound; return; }
 
       const { data, error } = await sb
         .from("gigs_posts")
-        .select("title,category,content,created_at")
+        .select("title,category,excerpt,content,created_at")
         .eq("id", id)
         .eq("published", true)
         .maybeSingle();
 
-      if (error || !data) {
-        box.innerHTML = '<a class="back" href="index.html">&larr; Balik sa tanan nga posts</a><p class="empty">Wala makita ang post.</p>';
-        return;
-      }
+      if (error || !data) { box.innerHTML = notFound; return; }
 
       document.title = data.title + " | Seven Gigs";
+      if (data.excerpt) {
+        let m = document.querySelector('meta[name="description"]');
+        if (!m) { m = document.createElement("meta"); m.name = "description"; document.head.appendChild(m); }
+        m.content = data.excerpt;
+      }
+
       box.innerHTML = `
-        <a class="back" href="index.html">&larr; Balik sa tanan nga posts</a><br>
+        <a class="back" href="index.html">&larr; Back to all posts</a><br>
         <span class="tag">${esc(data.category)}</span>
         <h1>${esc(data.title)}</h1>
         <div class="meta">${fmtDate(data.created_at)}</div>
         <article class="body">${renderContent(data.content)}</article>`;
     })();
   </script>
+  <script src="menu.js"></script>
 </body>
 </html>
