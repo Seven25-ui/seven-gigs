@@ -11,6 +11,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -32,6 +35,7 @@
       <p>Practical tips, AI tools, and tutorials for freelancers. Written from real Upwork experience, not theory.</p>
     </section>
 
+    <div class="search"><label for="q" class="sr">Search posts</label><input type="search" id="q" placeholder="Search posts..." autocomplete="off"></div>
     <div class="filters" id="filters" role="group" aria-label="Filter by category"></div>
     <div class="list" id="list" aria-live="polite"><p class="empty">Loading posts...</p></div>
   </main>
@@ -60,6 +64,7 @@
 
     let posts = [];
     let active = "All";
+    let query = "";
 
     function renderFilters() {
       const box = document.getElementById("filters");
@@ -75,9 +80,13 @@
 
     function renderList() {
       const list = document.getElementById("list");
-      const shown = active === "All" ? posts : posts.filter(p => p.category === active);
+      const shown = posts.filter(p =>
+        (active === "All" || p.category === active) &&
+        (!query || (p.title + " " + (p.excerpt || "") + " " + p.category).toLowerCase().includes(query)));
       if (!shown.length) {
-        list.innerHTML = '<p class="empty">No posts here yet. Check back soon.</p>';
+        list.innerHTML = query
+          ? '<p class="empty">No posts match "' + esc(query) + '". Try a different word.</p>'
+          : '<p class="empty">No posts here yet. Check back soon.</p>';
         return;
       }
       list.innerHTML = shown.map(p => `
@@ -106,6 +115,11 @@
       renderFilters();
       renderList();
     }
+
+    document.getElementById("q").addEventListener("input", e => {
+      query = e.target.value.trim().toLowerCase();
+      renderList();
+    });
 
     renderFilters();
     load();
