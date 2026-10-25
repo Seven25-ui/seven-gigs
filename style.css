@@ -128,3 +128,9 @@ textarea { min-height: 18rem; resize: vertical; font-family: ui-monospace, Conso
   .top nav.open { display: flex; }
   .top nav a { margin: 0; padding: .85rem 0; border-bottom: 1px solid var(--line); font-size: 1.1rem; }
 }
+
+/* search */
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.search { margin-top: 1rem; }
+.search input { width: 100%; max-width: 28rem; font: inherit; padding: .65rem .9rem; border: 2px solid var(--ink); background: var(--paper); color: var(--ink); border-radius: 0; }
+.search input::placeholder { color: var(--mute); }
