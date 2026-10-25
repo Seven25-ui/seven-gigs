@@ -16,12 +16,22 @@ function fmtDate(d) {
   return new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
 }
 
-// Plain text -> safe HTML. Blank line = new paragraph. "## " at the start = heading.
+// Plain text -> safe HTML.
+// Blank line = new paragraph. "## " at the start = heading.
+// Text between ``` fences = code block (keeps spacing and indentation).
 function renderContent(text) {
-  return String(text ?? "").split(/\n{2,}/).map(block => {
-    const b = block.trim();
-    if (!b) return "";
-    if (b.startsWith("## ")) return "<h2>" + esc(b.slice(3)) + "</h2>";
-    return "<p>" + esc(b).replace(/\n/g, "<br>") + "</p>";
+  return String(text ?? "").split("```").map((part, i) => {
+    if (i % 2 === 1) {
+      const code = part
+        .replace(/^[ \t]*(?:python|powershell|bash|shell|js|javascript|html|css|json|text|sql)?[ \t]*\r?\n/i, "")
+        .replace(/\s+$/, "");
+      return "<pre><code>" + esc(code) + "</code></pre>";
+    }
+    return part.split(/\n{2,}/).map(block => {
+      const b = block.trim();
+      if (!b) return "";
+      if (b.startsWith("## ")) return "<h2>" + esc(b.slice(3)) + "</h2>";
+      return "<p>" + esc(b).replace(/\n/g, "<br>") + "</p>";
+    }).join("");
   }).join("");
 }
