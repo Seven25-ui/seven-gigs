@@ -20,7 +20,7 @@ function fmtDate(d) {
 // Blank line = new paragraph. "## " at the start = heading.
 // Text between ``` fences = code block (keeps spacing and indentation).
 function renderContent(text) {
-  return String(text ?? "").split("```").map((part, i) => {
+  return String(text ?? "").replace(/\r\n?/g, "\n").split("```").map((part, i) => {
     if (i % 2 === 1) {
       const code = part
         .replace(/^[ \t]*(?:python|powershell|bash|shell|js|javascript|html|css|json|text|sql)?[ \t]*\r?\n/i, "")
