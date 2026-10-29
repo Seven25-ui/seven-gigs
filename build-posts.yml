@@ -1,0 +1,47 @@
+name: Build post pages
+
+on:
+  # every 6 hours
+  schedule:
+    - cron: "23 */6 * * *"
+  # the "Run workflow" button in the Actions tab
+  workflow_dispatch:
+  # also runs once when this workflow or the script is first added or changed
+  push:
+    paths:
+      - ".github/workflows/build-posts.yml"
+      - "scripts/build-posts.mjs"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-posts
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build post pages
+        run: node scripts/build-posts.mjs
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A posts sitemap.xml robots.txt
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update post pages"
+            git push
+          fi

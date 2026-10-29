@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Seven Gigs</title>
+  <meta name="robots" content="noindex">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
@@ -64,6 +65,15 @@
       const notFound = '<a class="back" href="index.html">&larr; Back to all posts</a><p class="empty">This post could not be found.</p>';
       const id = new URLSearchParams(location.search).get("id");
       if (!id) { box.innerHTML = notFound; return; }
+
+      // If a static page was built for this post, go there (better for Google and faster to load)
+      try {
+        const r = await fetch("posts/slugs.json", { cache: "no-store" });
+        if (r.ok) {
+          const map = await r.json();
+          if (map[id]) { location.replace("posts/" + map[id] + ".html"); return; }
+        }
+      } catch (e) { /* fall through to the dynamic version */ }
 
       const { data, error } = await sb
         .from("gigs_posts")

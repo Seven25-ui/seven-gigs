@@ -69,6 +69,11 @@
     let posts = [];
     let active = "All";
     let query = "";
+    let slugs = {};
+
+    function postHref(id) {
+      return slugs[id] ? "posts/" + slugs[id] + ".html" : "post.html?id=" + encodeURIComponent(id);
+    }
 
     function renderFilters() {
       const box = document.getElementById("filters");
@@ -94,7 +99,7 @@
         return;
       }
       list.innerHTML = shown.map(p => `
-        <a class="row" href="post.html?id=${encodeURIComponent(p.id)}">
+        <a class="row" href="${postHref(p.id)}">
           <span class="tag">${esc(p.category)}</span>
           <div>
             <h2>${esc(p.title)}</h2>
@@ -116,6 +121,10 @@
         return;
       }
       posts = data || [];
+      try {
+        const r = await fetch("posts/slugs.json", { cache: "no-store" });
+        if (r.ok) slugs = await r.json();
+      } catch (e) { /* static pages not built yet: dynamic links still work */ }
       renderFilters();
       renderList();
     }
