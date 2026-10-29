@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Build a Free Portfolio Website With GitHub Pages | Seven Gigs</title>
+  <meta name="description" content="No budget? No problem. This step-by-step guide shows you how to put a simple portfolio website online for free using GitHub Pages.">
+  <link rel="canonical" href="https://seven25-ui.github.io/seven-gigs/posts/how-to-build-a-free-portfolio-website-with-github-pages.html">
+  <meta property="og:site_name" content="Seven Gigs">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Build a Free Portfolio Website With GitHub Pages">
+  <meta property="og:description" content="No budget? No problem. This step-by-step guide shows you how to put a simple portfolio website online for free using GitHub Pages.">
+  <meta property="og:url" content="https://seven25-ui.github.io/seven-gigs/posts/how-to-build-a-free-portfolio-website-with-github-pages.html">
+  <meta property="og:image" content="https://seven25-ui.github.io/seven-gigs/og-image.png">
+  <meta property="article:published_time" content="2026-10-26T01:30:01.275Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Build a Free Portfolio Website With GitHub Pages","description":"No budget? No problem. This step-by-step guide shows you how to put a simple portfolio website online for free using GitHub Pages.","datePublished":"2026-10-26T01:30:01.275Z","dateModified":"2026-10-26T01:30:01.275Z","image":"https://seven25-ui.github.io/seven-gigs/og-image.png","mainEntityOfPage":"https://seven25-ui.github.io/seven-gigs/posts/how-to-build-a-free-portfolio-website-with-github-pages.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+      <nav aria-label="Main" id="mainNav">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap post">
+    <a class="back" href="../index.html">&larr; Back to all posts</a><br>
+    <span class="tag">Tutorials</span>
+    <h1>How to Build a Free Portfolio Website With GitHub Pages</h1>
+    <div class="meta">Oct 26, 2026 &middot; 3 min read</div>
+    <article class="body"><p>A portfolio website lets clients see your work in one place. It doesn&#39;t have to be fancy, and it doesn&#39;t have to cost money. With GitHub Pages you can publish a simple site for free, and you own all the files.</p><p>In this tutorial we&#39;ll put a basic portfolio online, step by step. You don&#39;t need to be an expert, but a little HTML helps.</p><h2>What you need</h2><p>1. A free GitHub account (sign up at github.com)<br>2. A text editor, such as Notepad or VS Code<br>3. About twenty minutes</p><h2>Step 1: Create a repository</h2><p>A repository (or &quot;repo&quot;) is a folder on GitHub that holds your files.</p><p>1. Log in to GitHub and click the &quot;+&quot; button at the top, then &quot;New repository&quot;.<br>2. Give it a name, for example my-portfolio.<br>3. Choose &quot;Public&quot;. GitHub Pages is free for public repositories.<br>4. Click &quot;Create repository&quot;.</p><p>If you name the repository exactly yourusername.github.io (using your real username), your site will live at the shorter address https://yourusername.github.io/. Any other name will put it at https://yourusername.github.io/repository-name/.</p><h2>Step 2: Write your page</h2><p>On your computer, create a file called index.html. The name matters, because GitHub Pages looks for this file first. Paste in this starter code:</p><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;Your Name | Freelancer&lt;/title&gt;
+  &lt;style&gt;
+    body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; padding: 0 20px; line-height: 1.6; color: #222; }
+    h1 { margin-bottom: 0; }
+    .project { border-top: 1px solid #ddd; padding: 16px 0; }
+    a { color: #2f5bff; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Your Name&lt;/h1&gt;
+  &lt;p&gt;Freelance web developer who builds fast, simple websites for small businesses.&lt;/p&gt;
+
+  &lt;h2&gt;Projects&lt;/h2&gt;
+  &lt;div class=&quot;project&quot;&gt;
+    &lt;h3&gt;Project name&lt;/h3&gt;
+    &lt;p&gt;What the problem was, what you built, and the result.&lt;/p&gt;
+    &lt;a href=&quot;https://example.com&quot;&gt;View project&lt;/a&gt;
+  &lt;/div&gt;
+
+  &lt;h2&gt;Contact&lt;/h2&gt;
+  &lt;p&gt;Email: &lt;a href=&quot;mailto:you@example.com&quot;&gt;you@example.com&lt;/a&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p>Change the name, the description, the project, and the email to your own details.</p><h2>Step 3: Upload the file</h2><p>1. Open your new repository on GitHub.<br>2. Click &quot;Add file&quot;, then &quot;Upload files&quot;.<br>3. Drag in your index.html file.<br>4. Scroll down and click &quot;Commit changes&quot;.</p><h2>Step 4: Turn on GitHub Pages</h2><p>1. In your repository, click &quot;Settings&quot;.<br>2. In the left menu, click &quot;Pages&quot;.<br>3. Under &quot;Branch&quot;, choose main, keep the folder as root, and click &quot;Save&quot;.<br>4. Wait a few minutes, then refresh the Pages screen. GitHub will show the link to your live site.</p><p>Open the link, and your portfolio is online.</p><h2>What to put in your portfolio</h2><p>Clients don&#39;t want a long life story. They want proof that you can solve their problem. For each project, show three things:</p><p>1. The problem: what the client or project needed<br>2. What you did: the tools and steps, in plain words<br>3. The result: what changed, with a number if you have one</p><p>If you don&#39;t have client work yet, include personal projects, and label them clearly as personal projects. A working website or bot that you built yourself is still real proof.</p><h2>Troubleshooting</h2><p>1. You see a 404 page: check that the file is named exactly index.html (all lowercase) and sits in the main folder, not inside another folder.<br>2. Your changes don&#39;t show: wait a minute or two, then refresh with Ctrl+Shift+R.<br>3. The Pages option is missing or greyed out: make sure the repository is public.<br>4. Your site looks broken on a phone: check that the viewport line in the head of your code is still there.</p><h2>Next steps</h2><p>1. Add a photo, links to your Upwork profile, and your best three projects.<br>2. Move the CSS into its own style.css file as your site grows.<br>3. Buy a custom domain later, and connect it in the Pages settings.<br>4. Keep the site updated. Add a new project after each finished job.</p><h2>The bottom line</h2><p>You don&#39;t need a big budget to look professional online. A clean, simple page with real projects and a clear way to contact you is enough to start. Publish it today, and improve it a little every week.</p></article>
+    <div class="share">
+      <strong>Share this post</strong>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-build-a-free-portfolio-website-with-github-pages.html" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-build-a-free-portfolio-website-with-github-pages.html&amp;text=How%20to%20Build%20a%20Free%20Portfolio%20Website%20With%20GitHub%20Pages" target="_blank" rel="noopener">X</a>
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-build-a-free-portfolio-website-with-github-pages.html&amp;text=How%20to%20Build%20a%20Free%20Portfolio%20Website%20With%20GitHub%20Pages" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/?text=How%20to%20Build%20a%20Free%20Portfolio%20Website%20With%20GitHub%20Pages%20https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-build-a-free-portfolio-website-with-github-pages.html" target="_blank" rel="noopener">WhatsApp</a>
+      <button type="button" id="copyLink">Copy link</button>
+    </div>
+    <section class="related"><h2>Keep reading</h2>
+      <a class="rel" href="how-to-write-a-simple-project-scope-document-with-a-free-template.html">
+        <span class="tag">Tutorials</span>
+        <span>How to Write a Simple Project Scope Document (With a Free Template)</span>
+      </a>
+      <a class="rel" href="how-to-build-a-simple-telegram-bot-with-python-step-by-step.html">
+        <span class="tag">Tutorials</span>
+        <span>How to Build a Simple Telegram Bot With Python (Step by Step)</span>
+      </a>
+      <a class="rel" href="writing-clear-client-updates-that-build-trust.html">
+        <span class="tag">Freelancing</span>
+        <span>Writing Clear Client Updates That Build Trust</span>
+      </a></section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div>
+        <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+        <p>Tips, AI tools, and tutorials for freelancers.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms &amp; Disclaimer</a>
+      </nav>
+    </div>
+    <div class="wrap copy">&copy; <span id="yr">2026</span> Seven Gigs. All rights reserved.</div>
+  </footer>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+    document.getElementById("copyLink").addEventListener("click", async function (e) {
+      var b = e.currentTarget;
+      try { await navigator.clipboard.writeText(location.href.split("#")[0]); b.textContent = "Copied!"; }
+      catch (err) { b.textContent = "Press Ctrl+C to copy the address bar"; }
+      setTimeout(function () { b.textContent = "Copy link"; }, 2000);
+    });
+  </script>
+  <script src="../menu.js"></script>
+</body>
+</html>

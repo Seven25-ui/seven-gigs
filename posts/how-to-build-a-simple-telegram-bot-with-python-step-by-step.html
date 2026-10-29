@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Build a Simple Telegram Bot With Python (Step by Step) | Seven Gigs</title>
+  <meta name="description" content="A beginner-friendly guide to creating your first Telegram bot with Python on Windows, from getting a token to seeing it reply to your messages.">
+  <link rel="canonical" href="https://seven25-ui.github.io/seven-gigs/posts/how-to-build-a-simple-telegram-bot-with-python-step-by-step.html">
+  <meta property="og:site_name" content="Seven Gigs">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Build a Simple Telegram Bot With Python (Step by Step)">
+  <meta property="og:description" content="A beginner-friendly guide to creating your first Telegram bot with Python on Windows, from getting a token to seeing it reply to your messages.">
+  <meta property="og:url" content="https://seven25-ui.github.io/seven-gigs/posts/how-to-build-a-simple-telegram-bot-with-python-step-by-step.html">
+  <meta property="og:image" content="https://seven25-ui.github.io/seven-gigs/og-image.png">
+  <meta property="article:published_time" content="2026-10-25T13:56:44.374Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Build a Simple Telegram Bot With Python (Step by Step)","description":"A beginner-friendly guide to creating your first Telegram bot with Python on Windows, from getting a token to seeing it reply to your messages.","datePublished":"2026-10-25T13:56:44.374Z","dateModified":"2026-10-25T13:56:44.374Z","image":"https://seven25-ui.github.io/seven-gigs/og-image.png","mainEntityOfPage":"https://seven25-ui.github.io/seven-gigs/posts/how-to-build-a-simple-telegram-bot-with-python-step-by-step.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+      <nav aria-label="Main" id="mainNav">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap post">
+    <a class="back" href="../index.html">&larr; Back to all posts</a><br>
+    <span class="tag">Tutorials</span>
+    <h1>How to Build a Simple Telegram Bot With Python (Step by Step)</h1>
+    <div class="meta">Oct 25, 2026 &middot; 4 min read</div>
+    <article class="body"><p>A Telegram bot is a small program that lives inside Telegram and replies to messages. People use them for customer support, reminders, notifications, and simple AI assistants. They are also a great first project if you want to learn how to build something real.</p><p>In this tutorial we will build a simple bot that greets you and repeats whatever you type. It is small, but it is the same foundation that bigger bots are built on. These steps are written for Windows, but they work on Mac and Linux with small changes.</p><h2>What you need</h2><p>1. A free Telegram account.<br>2. Python installed on your computer.<br>3. A text editor, such as Notepad or VS Code.</p><h2>Step 1: Create your bot with BotFather</h2><p>BotFather is Telegram&#39;s official bot for making bots.</p><p>1. Open Telegram and search for @BotFather. Make sure it has the blue verified check.<br>2. Send the message /newbot.<br>3. Choose a display name, for example &quot;My First Bot&quot;.<br>4. Choose a username. It must end with &quot;bot&quot;, for example myfirst_test_bot.<br>5. BotFather replies with a token, a long text that looks like random letters and numbers.</p><p>Treat this token like a password. Anyone who has it can control your bot. Never post it publicly or upload it to GitHub.</p><h2>Step 2: Install Python</h2><p>Download Python from python.org and run the installer. On the first screen, tick the box that says &quot;Add Python to PATH&quot;. This is the step beginners most often miss.</p><p>When it finishes, open PowerShell and check that it worked:</p><pre><code>python --version</code></pre><p>You should see a version number. If you see an error, close PowerShell, open it again, and try once more. If it still fails, reinstall Python and make sure the PATH box is ticked.</p><h2>Step 3: Install the Telegram library</h2><p>In PowerShell, run:</p><pre><code>pip install python-telegram-bot</code></pre><p>This installs a library that handles all the hard parts of talking to Telegram for you.</p><h2>Step 4: Write the bot</h2><p>Create a new folder, for example mybot. Inside it, create a file called bot.py and paste in this code:</p><pre><code>import os
+from telegram import Update
+from telegram.ext import (
+    ApplicationBuilder,
+    CommandHandler,
+    MessageHandler,
+    ContextTypes,
+    filters,
+)
+
+TOKEN = os.environ[&quot;BOT_TOKEN&quot;]
+
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(&quot;Hi! I&#39;m your first bot.&quot;)
+
+
+async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(&quot;You said: &quot; + update.message.text)
+
+
+app = ApplicationBuilder().token(TOKEN).build()
+app.add_handler(CommandHandler(&quot;start&quot;, start))
+app.add_handler(MessageHandler(filters.TEXT &amp; ~filters.COMMAND, echo))
+
+print(&quot;Bot is running...&quot;)
+app.run_polling()</code></pre><p>Here is what each part does:</p><p>1. The token is read from an environment variable called BOT_TOKEN, so the secret never sits inside your code file.<br>2. The start function runs when someone sends /start.<br>3. The echo function replies to any normal text message with the same text.<br>4. run_polling keeps the bot running and checking Telegram for new messages.</p><h2>Step 5: Run it</h2><p>Open PowerShell, go to your folder, set your token for this session, and start the bot. Replace the text in quotes with your real token:</p><pre><code>cd path\to\mybot
+$env:BOT_TOKEN = &quot;PASTE_YOUR_TOKEN_HERE&quot;
+python bot.py</code></pre><p>When you see &quot;Bot is running...&quot;, open Telegram, find your bot by its username, and send /start. Then type any message. Your bot should reply.</p><p>The token you set in PowerShell lasts only until you close that window. That is fine for learning, and you will need to set it again next time.</p><h2>Troubleshooting</h2><p>1. &quot;Unauthorized&quot; error: the token is wrong or has extra spaces. Copy it again from BotFather.<br>2. The bot doesn&#39;t reply: make sure bot.py is still running in PowerShell. If you close the window, the bot stops.<br>3. &quot;pip is not recognized&quot;: Python was not added to PATH. Reinstall it with the PATH box ticked.<br>4. A strange error right after installing: try updating the library with pip install --upgrade python-telegram-bot.</p><h2>Where to go next</h2><p>Once your echo bot works, you can make it genuinely useful:</p><p>1. Add more commands, such as /help or /about.<br>2. Connect it to an AI service so it can answer questions instead of repeating them.<br>3. Store messages or user data in a database.<br>4. Host it on a server so it stays online when your computer is off.</p><p>Each of these is a small step on top of what you just built. Many freelancers earn their first clients by building exactly this kind of bot for small businesses, so it is worth practicing.</p><h2>The bottom line</h2><p>You just built a working bot with about twenty lines of code. Keep your token secret, change one thing at a time, and test after every change. That habit will take you much further than any single tutorial.</p></article>
+    <div class="share">
+      <strong>Share this post</strong>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-build-a-simple-telegram-bot-with-python-step-by-step.html" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-build-a-simple-telegram-bot-with-python-step-by-step.html&amp;text=How%20to%20Build%20a%20Simple%20Telegram%20Bot%20With%20Python%20(Step%20by%20Step)" target="_blank" rel="noopener">X</a>
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-build-a-simple-telegram-bot-with-python-step-by-step.html&amp;text=How%20to%20Build%20a%20Simple%20Telegram%20Bot%20With%20Python%20(Step%20by%20Step)" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/?text=How%20to%20Build%20a%20Simple%20Telegram%20Bot%20With%20Python%20(Step%20by%20Step)%20https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-build-a-simple-telegram-bot-with-python-step-by-step.html" target="_blank" rel="noopener">WhatsApp</a>
+      <button type="button" id="copyLink">Copy link</button>
+    </div>
+    <section class="related"><h2>Keep reading</h2>
+      <a class="rel" href="how-to-write-a-simple-project-scope-document-with-a-free-template.html">
+        <span class="tag">Tutorials</span>
+        <span>How to Write a Simple Project Scope Document (With a Free Template)</span>
+      </a>
+      <a class="rel" href="how-to-build-a-free-portfolio-website-with-github-pages.html">
+        <span class="tag">Tutorials</span>
+        <span>How to Build a Free Portfolio Website With GitHub Pages</span>
+      </a>
+      <a class="rel" href="writing-clear-client-updates-that-build-trust.html">
+        <span class="tag">Freelancing</span>
+        <span>Writing Clear Client Updates That Build Trust</span>
+      </a></section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div>
+        <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+        <p>Tips, AI tools, and tutorials for freelancers.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms &amp; Disclaimer</a>
+      </nav>
+    </div>
+    <div class="wrap copy">&copy; <span id="yr">2026</span> Seven Gigs. All rights reserved.</div>
+  </footer>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+    document.getElementById("copyLink").addEventListener("click", async function (e) {
+      var b = e.currentTarget;
+      try { await navigator.clipboard.writeText(location.href.split("#")[0]); b.textContent = "Copied!"; }
+      catch (err) { b.textContent = "Press Ctrl+C to copy the address bar"; }
+      setTimeout(function () { b.textContent = "Copy link"; }, 2000);
+    });
+  </script>
+  <script src="../menu.js"></script>
+</body>
+</html>
