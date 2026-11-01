@@ -4,7 +4,7 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 // =========================================================================
 
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-const CATEGORIES = ["Freelancing", "AI Tools", "Tutorials"];
+const CATEGORIES = ["Freelancing", "Upwork", "AI Tools", "Automation", "Tutorials"];
 
 function esc(s) {
   return String(s ?? "").replace(/[&<>"']/g, c => ({
