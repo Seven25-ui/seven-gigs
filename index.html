@@ -19,6 +19,15 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Filter chips: wrap to the next line when there are many categories */
+    .filters{display:flex;flex-wrap:wrap;gap:8px}
+    .filters .chip{flex:0 0 auto}
+    @media(max-width:600px){
+      .filters{gap:6px}
+      .filters .chip{font-size:14px;padding:6px 12px}
+    }
+  </style>
 </head>
 <body>
   <header class="top">
