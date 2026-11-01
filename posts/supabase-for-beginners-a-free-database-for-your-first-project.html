@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Supabase for Beginners: A Free Database for Your First Project | Seven Gigs</title>
+  <meta name="description" content="Need to save data for a website or bot but do not want to manage a server? Here is how I started with Supabase.">
+  <link rel="canonical" href="https://seven25-ui.github.io/seven-gigs/posts/supabase-for-beginners-a-free-database-for-your-first-project.html">
+  <meta property="og:site_name" content="Seven Gigs">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Supabase for Beginners: A Free Database for Your First Project">
+  <meta property="og:description" content="Need to save data for a website or bot but do not want to manage a server? Here is how I started with Supabase.">
+  <meta property="og:url" content="https://seven25-ui.github.io/seven-gigs/posts/supabase-for-beginners-a-free-database-for-your-first-project.html">
+  <meta property="og:image" content="https://seven25-ui.github.io/seven-gigs/og-image.png">
+  <meta property="article:published_time" content="2026-11-01T15:19:33.344Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Supabase for Beginners: A Free Database for Your First Project","description":"Need to save data for a website or bot but do not want to manage a server? Here is how I started with Supabase.","datePublished":"2026-11-01T15:19:33.344Z","dateModified":"2026-11-01T15:19:33.344Z","image":"https://seven25-ui.github.io/seven-gigs/og-image.png","mainEntityOfPage":"https://seven25-ui.github.io/seven-gigs/posts/supabase-for-beginners-a-free-database-for-your-first-project.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+      <nav aria-label="Main" id="mainNav">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap post">
+    <a class="back" href="../index.html">&larr; Back to all posts</a><br>
+    <span class="tag">Tutorials</span>
+    <h1>Supabase for Beginners: A Free Database for Your First Project</h1>
+    <div class="meta">Nov 1, 2026 &middot; 3 min read</div>
+    <article class="body"><p>When I started building small projects like a blog, a movie site, and a support chatbot, I needed a place to store data. Setting up my own server felt too heavy. Supabase solved that for me, and it has a free plan that is enough to learn and build your first projects.</p><h2>What is Supabase?</h2><p>Supabase is an online database with a friendly dashboard. You create tables, like spreadsheets, and your website or app can read and write data through a simple connection. It also has login features, so you can make an admin page.</p><h2>What I used it for</h2><p>- The posts on this blog<br>- A movie and TV website<br>- A knowledge base for a RAG support chatbot</p><p>Free plan limits and features change from time to time, so check the Supabase website for what is included today.</p><h2>Step 1: Create a project</h2><p>1. Go to supabase.com and sign up.<br>2. Click New project.<br>3. Choose a name, a strong database password, and a region close to your visitors.<br>4. Wait a minute or two while it sets up.</p><p>Save your database password in a safe place. You will not see it again.</p><h2>Step 2: Create a table</h2><p>1. Open the Table Editor from the left menu.<br>2. Click New table and give it a name, like posts.<br>3. Add columns, for example: title, content, and published.<br>4. Save the table.</p><p>Think of a table like a spreadsheet. Each column is a heading, and each row is one item, such as one blog post.</p><h2>Step 3: Add some data</h2><p>In the Table Editor, click Insert row and fill in the fields. Do it by hand first, so you can see how the data looks before you connect anything.</p><h2>Step 4: Find your connection keys</h2><p>Open Project Settings, then API. You will see two things you need:</p><p>- The Project URL<br>- The anon public key</p><p>The anon key is meant to be used in a website, so it is safe in your front-end code. The service role key is different. It is private, so never put it in a website, a public repo, or a chat.</p><h2>Step 5: Turn on Row Level Security</h2><p>Row Level Security, or RLS, decides who can read or change your data. This step is important. Without good rules, strangers could change your table.</p><p>A simple setup for a blog: everyone can read published posts, and only you, after logging in, can add, edit, or delete.</p><h2>Step 6: Connect it to your website</h2><p>Add the Supabase library to your page, then use your Project URL and anon key to create a client. After that, you can ask for rows from your table and show them on the page. A basic read looks like this:</p><pre><code>const { data, error } = await sb
+  .from(&quot;posts&quot;)
+  .select(&quot;title, content&quot;)
+  .eq(&quot;published&quot;, true);</code></pre><h2>Mistakes to avoid</h2><p>- Putting the service role key in public code<br>- Skipping RLS because it feels confusing<br>- Forgetting to save the database password<br>- Building everything before testing one small table</p><h2>What to build next</h2><p>Start with something small: a to-do list, a guest book, or a mini blog. Once you can save and show data, you can move to logins, file storage, and even AI features like a chatbot that answers from your own data.</p><p>One working table is enough to start. Build the small thing, break it, fix it, and you will learn faster than from any video.</p></article>
+    <div class="share">
+      <strong>Share this post</strong>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fsupabase-for-beginners-a-free-database-for-your-first-project.html" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fsupabase-for-beginners-a-free-database-for-your-first-project.html&amp;text=Supabase%20for%20Beginners%3A%20A%20Free%20Database%20for%20Your%20First%20Project" target="_blank" rel="noopener">X</a>
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fsupabase-for-beginners-a-free-database-for-your-first-project.html&amp;text=Supabase%20for%20Beginners%3A%20A%20Free%20Database%20for%20Your%20First%20Project" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/?text=Supabase%20for%20Beginners%3A%20A%20Free%20Database%20for%20Your%20First%20Project%20https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fsupabase-for-beginners-a-free-database-for-your-first-project.html" target="_blank" rel="noopener">WhatsApp</a>
+      <button type="button" id="copyLink">Copy link</button>
+    </div>
+    <section class="related"><h2>Keep reading</h2>
+      <a class="rel" href="how-to-write-a-simple-project-scope-document-with-a-free-template.html">
+        <span class="tag">Tutorials</span>
+        <span>How to Write a Simple Project Scope Document (With a Free Template)</span>
+      </a>
+      <a class="rel" href="how-to-build-a-free-portfolio-website-with-github-pages.html">
+        <span class="tag">Tutorials</span>
+        <span>How to Build a Free Portfolio Website With GitHub Pages</span>
+      </a>
+      <a class="rel" href="how-to-build-a-simple-telegram-bot-with-python-step-by-step.html">
+        <span class="tag">Tutorials</span>
+        <span>How to Build a Simple Telegram Bot With Python (Step by Step)</span>
+      </a></section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div>
+        <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+        <p>Tips, AI tools, and tutorials for freelancers.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms &amp; Disclaimer</a>
+      </nav>
+    </div>
+    <div class="wrap copy">&copy; <span id="yr">2026</span> Seven Gigs. All rights reserved.</div>
+  </footer>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+    document.getElementById("copyLink").addEventListener("click", async function (e) {
+      var b = e.currentTarget;
+      try { await navigator.clipboard.writeText(location.href.split("#")[0]); b.textContent = "Copied!"; }
+      catch (err) { b.textContent = "Press Ctrl+C to copy the address bar"; }
+      setTimeout(function () { b.textContent = "Copy link"; }, 2000);
+    });
+  </script>
+  <script src="../menu.js"></script>
+</body>
+</html>
