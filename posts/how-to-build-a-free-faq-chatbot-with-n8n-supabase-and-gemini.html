@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Build a Free FAQ Chatbot With n8n, Supabase, and Gemini | Seven Gigs</title>
+  <meta name="description" content="A beginner-friendly guide to building a chatbot that answers questions from your own FAQ, using free tools and no heavy coding.">
+  <link rel="canonical" href="https://seven25-ui.github.io/seven-gigs/posts/how-to-build-a-free-faq-chatbot-with-n8n-supabase-and-gemini.html">
+  <meta property="og:site_name" content="Seven Gigs">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Build a Free FAQ Chatbot With n8n, Supabase, and Gemini">
+  <meta property="og:description" content="A beginner-friendly guide to building a chatbot that answers questions from your own FAQ, using free tools and no heavy coding.">
+  <meta property="og:url" content="https://seven25-ui.github.io/seven-gigs/posts/how-to-build-a-free-faq-chatbot-with-n8n-supabase-and-gemini.html">
+  <meta property="og:image" content="https://seven25-ui.github.io/seven-gigs/og-image.png">
+  <meta property="article:published_time" content="2026-11-05T12:51:11.552Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Build a Free FAQ Chatbot With n8n, Supabase, and Gemini","description":"A beginner-friendly guide to building a chatbot that answers questions from your own FAQ, using free tools and no heavy coding.","datePublished":"2026-11-05T12:51:11.552Z","dateModified":"2026-11-05T12:51:11.552Z","image":"https://seven25-ui.github.io/seven-gigs/og-image.png","mainEntityOfPage":"https://seven25-ui.github.io/seven-gigs/posts/how-to-build-a-free-faq-chatbot-with-n8n-supabase-and-gemini.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+      <nav aria-label="Main" id="mainNav">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap post">
+    <a class="back" href="../index.html">&larr; Back to all posts</a><br>
+    <span class="tag">Automation</span>
+    <h1>How to Build a Free FAQ Chatbot With n8n, Supabase, and Gemini</h1>
+    <div class="meta">Nov 5, 2026 &middot; 3 min read</div>
+    <article class="body"><p>A chatbot that answers customer questions from a business&#39;s own FAQ is one of the most requested jobs for small online shops. The good news is that you can build a working version with free tools. Here is the basic idea and the steps I followed.</p><p>What this chatbot does</p><p>A customer asks a question. The chatbot looks for the closest answer in your FAQ and replies using that information. If it cannot find an answer, it says it is not sure and offers to hand the conversation to a human. This keeps the bot honest instead of making things up.</p><p>What you need</p><p>- n8n (the free self-hosted version works)<br>- A free Supabase project<br>- A free Gemini API key from Google AI Studio<br>- A short FAQ list (10 to 20 questions is enough for a demo)</p><p>Step 1: Prepare your FAQ</p><p>Write your questions and answers in simple text. For a practice project, make up a small business, like a coffee shop, with questions about opening hours, prices, and delivery.</p><p>Step 2: Create a table in Supabase</p><p>Enable the vector extension, then create a table to hold your FAQ text and its embedding. The vector size in the table must match the size your embedding model produces, or the insert will fail.</p><p>Step 3: Load your FAQ into the database</p><p>Build a small n8n workflow that reads each FAQ row, creates an embedding with Gemini, and saves both the text and the embedding in Supabase. You only need to run this once, or again when your FAQ changes.</p><p>Step 4: Build the chat workflow</p><p>Create a new workflow with a Chat Trigger node and connect it to an AI Agent node. Add a Gemini chat model and a simple memory so the bot remembers the last few messages.</p><p>Step 5: Connect Supabase as a tool</p><p>Add the Supabase Vector Store as a tool for the agent. Use the same Gemini embedding model here as you used when loading the FAQ. Give the tool a clear name and description, like &quot;faq_search&quot;, so the agent knows when to use it.</p><p>Step 6: Write a clear system prompt</p><p>Tell the agent to answer only from the FAQ results, to keep replies short and friendly, and to say it is not sure when nothing matches. Also tell it what to say when the customer asks for a human.</p><p>Step 7: Test it</p><p>Try three kinds of questions: one that is in your FAQ, one that is not, and one asking for a human. A good bot answers the first, admits it does not know the second, and offers a handoff on the third.</p><p>Things to watch out for</p><p>- Use the same embedding model for loading and searching, or your results will be poor.<br>- Free Gemini plans have daily limits, so do not spam test messages.<br>- Keep your API keys private and never paste them into public code.<br>- Keep your FAQ clear and short, because the answers are only as good as your data.</p><p>Make it part of your portfolio</p><p>Record a short screen video showing the three test questions. Clients love seeing a bot work in 30 seconds, and a demo like this shows you can handle a real support chatbot job from start to finish.</p></article>
+    <div class="share">
+      <strong>Share this post</strong>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-build-a-free-faq-chatbot-with-n8n-supabase-and-gemini.html" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-build-a-free-faq-chatbot-with-n8n-supabase-and-gemini.html&amp;text=How%20to%20Build%20a%20Free%20FAQ%20Chatbot%20With%20n8n%2C%20Supabase%2C%20and%20Gemini" target="_blank" rel="noopener">X</a>
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-build-a-free-faq-chatbot-with-n8n-supabase-and-gemini.html&amp;text=How%20to%20Build%20a%20Free%20FAQ%20Chatbot%20With%20n8n%2C%20Supabase%2C%20and%20Gemini" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/?text=How%20to%20Build%20a%20Free%20FAQ%20Chatbot%20With%20n8n%2C%20Supabase%2C%20and%20Gemini%20https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-build-a-free-faq-chatbot-with-n8n-supabase-and-gemini.html" target="_blank" rel="noopener">WhatsApp</a>
+      <button type="button" id="copyLink">Copy link</button>
+    </div>
+    <section class="related"><h2>Keep reading</h2>
+      <a class="rel" href="5-simple-n8n-automations-you-can-sell-on-upwork.html">
+        <span class="tag">Automation</span>
+        <span>5 Simple n8n Automations You Can Sell on Upwork</span>
+      </a>
+      <a class="rel" href="n8n-for-beginners-build-your-first-automation-workflow.html">
+        <span class="tag">Automation</span>
+        <span>n8n for Beginners: Build Your First Automation Workflow</span>
+      </a>
+      <a class="rel" href="how-to-spot-red-flags-in-an-upwork-job-post.html">
+        <span class="tag">Upwork</span>
+        <span>How to Spot Red Flags in an Upwork Job Post</span>
+      </a></section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div>
+        <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+        <p>Tips, AI tools, and tutorials for freelancers.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms &amp; Disclaimer</a>
+      </nav>
+    </div>
+    <div class="wrap copy">&copy; <span id="yr">2026</span> Seven Gigs. All rights reserved.</div>
+  </footer>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+    document.getElementById("copyLink").addEventListener("click", async function (e) {
+      var b = e.currentTarget;
+      try { await navigator.clipboard.writeText(location.href.split("#")[0]); b.textContent = "Copied!"; }
+      catch (err) { b.textContent = "Press Ctrl+C to copy the address bar"; }
+      setTimeout(function () { b.textContent = "Copy link"; }, 2000);
+    });
+  </script>
+  <script src="../menu.js"></script>
+</body>
+</html>
