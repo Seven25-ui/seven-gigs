@@ -28,12 +28,24 @@
     .product li{margin-bottom:.25rem}
     .product .meta{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:auto;padding-top:.75rem;border-top:1px solid var(--line)}
     .price{font-weight:800;font-size:1.5rem;letter-spacing:-.02em;background:var(--sun);padding:0 .5rem;border:2px solid var(--ink)}
+    .price small{font-size:.8rem;font-weight:600;margin-left:.35rem}
     .buy{display:inline-block;font:inherit;font-weight:700;padding:.6rem 1.1rem;border:2px solid var(--ink);background:var(--blue);color:#fff;text-decoration:none;cursor:pointer}
     .buy:hover{background:var(--ink)}
-    .buy[aria-disabled="true"]{background:transparent;color:var(--mute);border-color:var(--line);cursor:not-allowed}
+    .buy.ghost{background:transparent;color:var(--ink)}
+    .buy.ghost:hover{background:var(--ink);color:var(--paper)}
     .note{max-width:62ch;margin:0 0 3rem}
     .note h2{margin:0 0 .4rem;font-size:1.4rem;letter-spacing:-.02em}
     .note a{color:var(--blue)}
+    dialog.pay{max-width:32rem;width:calc(100% - 2.5rem);max-height:90vh;overflow:auto;padding:1.5rem;border:2px solid var(--ink);background:var(--paper);color:var(--ink)}
+    dialog.pay::backdrop{background:rgba(15,27,45,.6)}
+    dialog.pay h2{margin:0 0 .25rem;font-size:1.4rem;letter-spacing:-.02em}
+    dialog.pay h3{margin:0 0 .35rem;font-size:1.1rem}
+    dialog.pay p{margin:.25rem 0}
+    dialog.pay .method{background:var(--wash);border:2px solid var(--ink);padding:.9rem 1rem;margin:1rem 0}
+    dialog.pay .method strong{display:block;font-size:1.15rem;letter-spacing:.02em}
+    dialog.pay .method .buy{margin-top:.75rem}
+    dialog.pay img{display:block;max-width:12rem;margin:.75rem 0 0;border:2px solid var(--ink)}
+    dialog.pay .actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
   </style>
 </head>
 <body>
@@ -53,16 +65,41 @@
   <main class="wrap">
     <section class="hero">
       <h1>Tools for freelancers who are just starting.</h1>
-      <p>Made from real Upwork experience. Instant download after you pay.</p>
+      <p>Made from real Upwork experience. Pay with PayPal, card, or GCash and get your file by email.</p>
     </section>
 
     <div class="products" id="products" aria-live="polite"></div>
 
     <section class="note">
       <h2>How buying works</h2>
-      <p>Press Buy, pay on the secure checkout page, and your file is sent to your email right away. Questions before you buy? <a href="contact.html">Message me</a>. I reply by email, in writing only.</p>
+      <p>Press Buy, pick PayPal (or card) or GCash, and pay. Then email me your receipt or reference number. I check the payment and send your file by email, usually within 24 hours. Questions before you buy? <a href="contact.html">Message me</a>. I reply by email, in writing only.</p>
     </section>
   </main>
+
+  <dialog class="pay" id="payDlg" aria-labelledby="payTitle">
+    <h2 id="payTitle">Choose how to pay</h2>
+    <p id="payProduct"></p>
+
+    <div class="method" id="ppBox">
+      <h3>PayPal or card (worldwide)</h3>
+      <p>Pay with your PayPal balance, or with a Mastercard or Visa on the PayPal page.</p>
+      <a class="buy" id="ppLink" href="#" target="_blank" rel="noopener">Pay with PayPal</a>
+    </div>
+
+    <div class="method" id="gcBox">
+      <h3>GCash (Philippines)</h3>
+      <p>Send the exact peso amount to:</p>
+      <strong id="gcName"></strong>
+      <strong id="gcNum"></strong>
+      <img id="gcQr" alt="GCash QR code" hidden>
+    </div>
+
+    <p><b>After you pay:</b> email me your receipt or reference number and the email address where I should send your file.</p>
+    <div class="actions">
+      <a class="buy" id="payMail" href="#">Email my receipt</a>
+      <button class="buy ghost" type="button" id="payClose">Close</button>
+    </div>
+  </dialog>
 
   <footer class="foot">
     <div class="wrap foot-grid">
@@ -85,43 +122,84 @@
   <script>
     document.getElementById("yr").textContent = new Date().getFullYear();
 
-    /* ===== EDIT YOUR PRODUCTS HERE =====
-       link: paste your Gumroad / Payhip / Ko-fi checkout link.
-       Leave link empty ("") and the button shows "Coming soon". */
+    /* ===== EDIT THESE ===== */
+    const EMAIL  = "guardianagene6@gmail.com";
+    // PayPal: your PayPal.me name, e.g. "genedoe" (from paypal.me/genedoe). Leave "" to hide PayPal.
+    const PAYPAL_ME = "YOURNAME";
+    // GCash: your name and number as shown in GCash. qr: image file in the repo, e.g. "gcash-qr.png", or "".
+    // Leave number "" to hide GCash.
+    const GCASH = { name: "YOUR NAME ON GCASH", number: "09XX XXX XXXX", qr: "" };
+
+    // usd = PayPal price, php = GCash price. link = optional checkout link; if set, Buy goes straight there.
     const PRODUCTS = [
       {
         title: "Upwork Proposal Prompt Pack",
         desc: "Ready-to-use AI prompts that turn a job post into a proposal that sounds like you, not a template.",
         items: ["40+ prompts for proposals, replies, and profile writing", "Works with ChatGPT, Gemini, and Claude", "Made for first-time freelancers"],
-        price: "$5",
-        link: ""
+        usd: 5, php: 249, link: ""
       },
       {
         title: "How to Win Your First Upwork Client",
         desc: "A step-by-step guide to getting your first job on Upwork with no reviews, from real experience.",
         items: ["Profile setup and your first proposals", "How to spot and avoid scams", "How to work with clients through chat only"],
-        price: "$7",
-        link: ""
+        usd: 7, php: 349, link: ""
       }
     ];
+    /* ===== END EDIT ===== */
 
     function esc(s) {
       return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
     }
 
-    document.getElementById("products").innerHTML = PRODUCTS.map(p => {
-      const live = p.link && /^https:\/\//.test(p.link);
-      const btn = live
+    document.getElementById("products").innerHTML = PRODUCTS.map((p, i) => {
+      const action = p.link && /^https:\/\//.test(p.link)
         ? `<a class="buy" href="${esc(p.link)}" target="_blank" rel="noopener">Buy now</a>`
-        : `<span class="buy" role="link" aria-disabled="true">Coming soon</span>`;
+        : `<button class="buy" type="button" data-i="${i}">Buy now</button>`;
       return `
         <article class="product">
           <h2>${esc(p.title)}</h2>
           <p>${esc(p.desc)}</p>
-          <ul>${p.items.map(i => `<li>${esc(i)}</li>`).join("")}</ul>
-          <div class="meta"><span class="price">${esc(p.price)}</span>${btn}</div>
+          <ul>${p.items.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+          <div class="meta"><span class="price">$${esc(p.usd)}<small>\u20b1${esc(p.php)}</small></span>${action}</div>
         </article>`;
     }).join("");
+
+    const dlg = document.getElementById("payDlg");
+    document.getElementById("products").addEventListener("click", e => {
+      const b = e.target.closest("button[data-i]");
+      if (!b) return;
+      const p = PRODUCTS[+b.dataset.i];
+      document.getElementById("payProduct").textContent = p.title;
+
+      const pp = document.getElementById("ppBox");
+      pp.hidden = !PAYPAL_ME;
+      if (PAYPAL_ME) {
+        document.getElementById("ppLink").href =
+          "https://www.paypal.me/" + encodeURIComponent(PAYPAL_ME) + "/" + p.usd + "USD";
+        document.getElementById("ppLink").textContent = "Pay $" + p.usd + " with PayPal";
+      }
+
+      const gc = document.getElementById("gcBox");
+      gc.hidden = !GCASH.number;
+      if (GCASH.number) {
+        document.getElementById("gcName").textContent = GCASH.name;
+        document.getElementById("gcNum").textContent = GCASH.number + "  (\u20b1" + p.php + ")";
+        const qr = document.getElementById("gcQr");
+        if (GCASH.qr) { qr.src = GCASH.qr; qr.hidden = false; } else { qr.hidden = true; }
+      }
+
+      const subject = "Payment for: " + p.title;
+      const body = "Product: " + p.title +
+        "\nPaid with (PayPal / card / GCash): " +
+        "\nAmount paid: " +
+        "\nReceipt or reference number: " +
+        "\nEmail to send my file to: ";
+      document.getElementById("payMail").href =
+        "mailto:" + EMAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+      dlg.showModal();
+    });
+    document.getElementById("payClose").addEventListener("click", () => dlg.close());
+    dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
   </script>
   <script src="menu.js"></script>
 </body>
