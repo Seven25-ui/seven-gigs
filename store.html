@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Store | Seven Gigs</title>
+  <meta name="description" content="Digital products for freelancers: prompt packs and guides made from real Upwork experience.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <meta property="og:site_name" content="Seven Gigs">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Store | Seven Gigs">
+  <meta property="og:description" content="Digital products for freelancers: prompt packs and guides made from real Upwork experience.">
+  <meta property="og:url" content="https://seven25-ui.github.io/seven-gigs/store.html">
+  <meta property="og:image" content="https://seven25-ui.github.io/seven-gigs/og-image.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Store: uses the site's own colors from style.css */
+    .products{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin:1.5rem 0 3rem}
+    .product{display:flex;flex-direction:column;gap:.75rem;padding:1.4rem;border:2px solid var(--ink);background:var(--paper)}
+    .product h2{margin:0;font-size:1.35rem;line-height:1.2;letter-spacing:-.02em}
+    .product p{margin:0;color:var(--mute)}
+    .product ul{margin:0;padding-left:1.2rem}
+    .product li{margin-bottom:.25rem}
+    .product .meta{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:auto;padding-top:.75rem;border-top:1px solid var(--line)}
+    .price{font-weight:800;font-size:1.5rem;letter-spacing:-.02em;background:var(--sun);padding:0 .5rem;border:2px solid var(--ink)}
+    .buy{display:inline-block;font:inherit;font-weight:700;padding:.6rem 1.1rem;border:2px solid var(--ink);background:var(--blue);color:#fff;text-decoration:none;cursor:pointer}
+    .buy:hover{background:var(--ink)}
+    .buy[aria-disabled="true"]{background:transparent;color:var(--mute);border-color:var(--line);cursor:not-allowed}
+    .note{max-width:62ch;margin:0 0 3rem}
+    .note h2{margin:0 0 .4rem;font-size:1.4rem;letter-spacing:-.02em}
+    .note a{color:var(--blue)}
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="index.html"><img class="logo-mark" src="logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+      <nav aria-label="Main" id="mainNav">
+        <a href="index.html">Home</a>
+        <a href="store.html" aria-current="page">Store</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>Tools for freelancers who are just starting.</h1>
+      <p>Made from real Upwork experience. Instant download after you pay.</p>
+    </section>
+
+    <div class="products" id="products" aria-live="polite"></div>
+
+    <section class="note">
+      <h2>How buying works</h2>
+      <p>Press Buy, pay on the secure checkout page, and your file is sent to your email right away. Questions before you buy? <a href="contact.html">Message me</a>. I only reply by chat.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div>
+        <a class="logo" href="index.html"><img class="logo-mark" src="logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+        <p>Tips, AI tools, and tutorials for freelancers.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="index.html">Home</a>
+        <a href="store.html">Store</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms &amp; Disclaimer</a>
+      </nav>
+    </div>
+    <div class="wrap copy">&copy; <span id="yr">2026</span> Seven Gigs. All rights reserved.</div>
+  </footer>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+
+    /* ===== EDIT YOUR PRODUCTS HERE =====
+       link: paste your Gumroad / Payhip / Ko-fi checkout link.
+       Leave link empty ("") and the button shows "Coming soon". */
+    const PRODUCTS = [
+      {
+        title: "Upwork Proposal Prompt Pack",
+        desc: "Ready-to-use AI prompts that turn a job post into a proposal that sounds like you, not a template.",
+        items: ["40+ prompts for proposals, replies, and profile writing", "Works with ChatGPT, Gemini, and Claude", "Made for first-time freelancers"],
+        price: "$5",
+        link: ""
+      },
+      {
+        title: "Unsaon Pagsugod sa Upwork (Bisaya Guide)",
+        desc: "Step-by-step guide sa pagsugod sa Upwork nga wala pa kay client, gikan sa tinuod nga kasinatian.",
+        items: ["Profile setup ug unang proposals", "Unsaon paglikay sa scam", "Chat-only nga komunikasyon"],
+        price: "$7",
+        link: ""
+      }
+    ];
+
+    function esc(s) {
+      return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+    }
+
+    document.getElementById("products").innerHTML = PRODUCTS.map(p => {
+      const live = p.link && /^https:\/\//.test(p.link);
+      const btn = live
+        ? `<a class="buy" href="${esc(p.link)}" target="_blank" rel="noopener">Buy now</a>`
+        : `<span class="buy" role="link" aria-disabled="true">Coming soon</span>`;
+      return `
+        <article class="product">
+          <h2>${esc(p.title)}</h2>
+          <p>${esc(p.desc)}</p>
+          <ul>${p.items.map(i => `<li>${esc(i)}</li>`).join("")}</ul>
+          <div class="meta"><span class="price">${esc(p.price)}</span>${btn}</div>
+        </article>`;
+    }).join("");
+  </script>
+  <script src="menu.js"></script>
+</body>
+</html>
