@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Keep Your API Keys Safe When You Host on GitHub Pages | Seven Gigs</title>
+  <meta name="description" content="Public repos are visible to everyone. Learn which keys are safe in your code, which ones must stay secret, and what to do if one leaks.">
+  <link rel="canonical" href="https://seven25-ui.github.io/seven-gigs/posts/how-to-keep-your-api-keys-safe-when-you-host-on-github-pages.html">
+  <meta property="og:site_name" content="Seven Gigs">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Keep Your API Keys Safe When You Host on GitHub Pages">
+  <meta property="og:description" content="Public repos are visible to everyone. Learn which keys are safe in your code, which ones must stay secret, and what to do if one leaks.">
+  <meta property="og:url" content="https://seven25-ui.github.io/seven-gigs/posts/how-to-keep-your-api-keys-safe-when-you-host-on-github-pages.html">
+  <meta property="og:image" content="https://seven25-ui.github.io/seven-gigs/og-image.png">
+  <meta property="article:published_time" content="2026-11-12T23:30:20.576Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Keep Your API Keys Safe When You Host on GitHub Pages","description":"Public repos are visible to everyone. Learn which keys are safe in your code, which ones must stay secret, and what to do if one leaks.","datePublished":"2026-11-12T23:30:20.576Z","dateModified":"2026-11-12T23:30:20.576Z","image":"https://seven25-ui.github.io/seven-gigs/og-image.png","mainEntityOfPage":"https://seven25-ui.github.io/seven-gigs/posts/how-to-keep-your-api-keys-safe-when-you-host-on-github-pages.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+      <nav aria-label="Main" id="mainNav">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap post">
+    <a class="back" href="../index.html">&larr; Back to all posts</a><br>
+    <span class="tag">Tutorials</span>
+    <h1>How to Keep Your API Keys Safe When You Host on GitHub Pages</h1>
+    <div class="meta">Nov 12, 2026 &middot; 4 min read</div>
+    <article class="body"><p>GitHub Pages is a great free way to host a website, but it comes with one important rule: everything in a public repository can be read by anyone. That includes your HTML, your JavaScript, and any keys you place inside them. Many beginners accidentally publish secret keys and only notice later, when someone abuses them. This guide explains what is safe, what is not, and how to protect yourself.</p><p>1. Understand what &quot;public&quot; really means</p><p>When your repository is public, anyone can open your files and read them. Even if your site hides something visually, the code behind it is still visible. So the question is not &quot;can people find my key?&quot; but &quot;what happens if they do?&quot;</p><p>2. Know the difference between public and secret keys</p><p>Some keys are designed to be used in the browser. For example, many services give you a public or anonymous key that is meant for front-end code. These are only safe when the service has proper access rules in place. In Supabase, for instance, the public key is only safe when Row Level Security is turned on and your policies are correct. Without those rules, someone could read or change data they should not.</p><p>Other keys are secret. These include service role keys, private API keys, payment keys, and AI provider keys. A secret key should never appear in front-end code or in a public repository.</p><p>A simple test: if the key can delete data, spend money, or act as an admin, it must stay secret.</p><p>3. Turn on access rules for your database</p><p>If your site talks directly to a database, set up rules that decide who can read and write. Allow public reading only for the data that really is public, such as blog posts. Keep writing limited to logged-in admins. Test these rules by trying to do something you should not be able to do.</p><p>4. Use a small backend or proxy for secret keys</p><p>If your website needs an AI model or another paid service, do not put that key in your JavaScript. Instead, create a small server function, such as a Cloudflare Worker, that holds the key and talks to the service for you. Your website sends a request to the Worker, and the Worker adds the secret key on the server side. The browser never sees it.</p><p>Store the key as a secret or environment variable in the platform, not inside the code file.</p><p>5. Keep secret files out of your repository</p><p>Create a file named .gitignore and list files that should never be uploaded, like .env files. This tells Git to skip them. Do this before your first commit, because it is easier to prevent a leak than to clean one up.</p><p>6. Add limits where you can</p><p>Many services let you restrict a key so it only works from your website address, or only for certain actions. Turn on these limits. Also set usage or budget limits so a leak cannot cost you a lot of money.</p><p>7. What to do if a key leaks</p><p>Act quickly:</p><p>- Revoke or rotate the key in the service dashboard right away<br>- Create a new key and update your project<br>- Check usage logs for strange activity<br>- Remember that deleting the key from your file is not enough, because the old version stays in the history</p><p>Treat any key that has been public as compromised, even if you removed it a minute later.</p><p>8. Watch for warnings</p><p>GitHub can warn you when it detects certain secrets in a repository. If you receive such an alert, take it seriously and follow the steps above immediately.</p><p>A quick safety checklist</p><p>- No secret keys in front-end code<br>- Database rules turned on and tested<br>- Secret keys stored on the server side<br>- .env files ignored by Git<br>- Limits and budgets set on paid services<br>- A plan ready to rotate keys</p><p>Final thoughts</p><p>You do not need to be a security expert to stay safe. You only need a few good habits: keep secrets on the server, use public keys only with proper rules, and react fast when something goes wrong. These habits protect your projects, and they also show clients that you build things carefully.</p></article>
+    <div class="share">
+      <strong>Share this post</strong>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-keep-your-api-keys-safe-when-you-host-on-github-pages.html" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-keep-your-api-keys-safe-when-you-host-on-github-pages.html&amp;text=How%20to%20Keep%20Your%20API%20Keys%20Safe%20When%20You%20Host%20on%20GitHub%20Pages" target="_blank" rel="noopener">X</a>
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-keep-your-api-keys-safe-when-you-host-on-github-pages.html&amp;text=How%20to%20Keep%20Your%20API%20Keys%20Safe%20When%20You%20Host%20on%20GitHub%20Pages" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/?text=How%20to%20Keep%20Your%20API%20Keys%20Safe%20When%20You%20Host%20on%20GitHub%20Pages%20https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-keep-your-api-keys-safe-when-you-host-on-github-pages.html" target="_blank" rel="noopener">WhatsApp</a>
+      <button type="button" id="copyLink">Copy link</button>
+    </div>
+    <section class="related"><h2>Keep reading</h2>
+      <a class="rel" href="how-to-connect-a-custom-domain-to-your-github-pages-site.html">
+        <span class="tag">Tutorials</span>
+        <span>How to Connect a Custom Domain to Your GitHub Pages Site</span>
+      </a>
+      <a class="rel" href="supabase-for-beginners-a-free-database-for-your-first-project.html">
+        <span class="tag">Tutorials</span>
+        <span>Supabase for Beginners: A Free Database for Your First Project</span>
+      </a>
+      <a class="rel" href="how-to-write-a-simple-project-scope-document-with-a-free-template.html">
+        <span class="tag">Tutorials</span>
+        <span>How to Write a Simple Project Scope Document (With a Free Template)</span>
+      </a></section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div>
+        <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+        <p>Tips, AI tools, and tutorials for freelancers.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms &amp; Disclaimer</a>
+      </nav>
+    </div>
+    <div class="wrap copy">&copy; <span id="yr">2026</span> Seven Gigs. All rights reserved.</div>
+  </footer>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+    document.getElementById("copyLink").addEventListener("click", async function (e) {
+      var b = e.currentTarget;
+      try { await navigator.clipboard.writeText(location.href.split("#")[0]); b.textContent = "Copied!"; }
+      catch (err) { b.textContent = "Press Ctrl+C to copy the address bar"; }
+      setTimeout(function () { b.textContent = "Copy link"; }, 2000);
+    });
+  </script>
+  <script src="../menu.js"></script>
+</body>
+</html>
