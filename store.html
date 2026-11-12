@@ -44,7 +44,7 @@
     dialog.pay .method{background:var(--wash);border:2px solid var(--ink);padding:.9rem 1rem;margin:1rem 0}
     dialog.pay .method strong{display:block;font-size:1.15rem;letter-spacing:.02em}
     dialog.pay .method .buy{margin-top:.75rem}
-    dialog.pay img{display:block;max-width:12rem;margin:.75rem 0 0;border:2px solid var(--ink)}
+    dialog.pay img{display:block;width:100%;max-width:16rem;height:auto;margin:.75rem 0 0;border:2px solid var(--ink)}
     dialog.pay .actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
   </style>
 </head>
@@ -88,10 +88,10 @@
 
     <div class="method" id="gcBox">
       <h3>GCash (Philippines)</h3>
-      <p>Send the exact peso amount to:</p>
+      <p id="gcAmt"></p>
       <strong id="gcName"></strong>
       <strong id="gcNum"></strong>
-      <img id="gcQr" alt="GCash QR code" hidden>
+      <img id="gcQr" alt="GCash QR code for Seven Gigs payments" hidden>
     </div>
 
     <p><b>After you pay:</b> email me your receipt or reference number and the email address where I should send your file.</p>
@@ -125,10 +125,10 @@
     /* ===== EDIT THESE ===== */
     const EMAIL  = "guardianagene6@gmail.com";
     // PayPal: your PayPal.me name, e.g. "genedoe" (from paypal.me/genedoe). Leave "" to hide PayPal.
-    const PAYPAL_ME = "YOURNAME";
-    // GCash: your name and number as shown in GCash. qr: image file in the repo, e.g. "gcash-qr.png", or "".
-    // Leave number "" to hide GCash.
-    const GCASH = { name: "YOUR NAME ON GCASH", number: "09XX XXX XXXX", qr: "" };
+    const PAYPAL_ME = "";
+    // GCash: the QR image is enough (gcash-qr.png sits next to this file).
+    // name and number are optional; leave them "" to show only the QR. Set qr "" and number "" to hide GCash.
+    const GCASH = { name: "", number: "", qr: "gcash-qr.png" };
 
     // usd = PayPal price, php = GCash price. link = optional checkout link; if set, Buy goes straight there.
     const PRODUCTS = [
@@ -180,10 +180,17 @@
       }
 
       const gc = document.getElementById("gcBox");
-      gc.hidden = !GCASH.number;
-      if (GCASH.number) {
-        document.getElementById("gcName").textContent = GCASH.name;
-        document.getElementById("gcNum").textContent = GCASH.number + "  (\u20b1" + p.php + ")";
+      gc.hidden = !(GCASH.number || GCASH.qr);
+      if (!gc.hidden) {
+        document.getElementById("gcAmt").textContent = GCASH.qr
+          ? "Scan this QR in your GCash app and send exactly \u20b1" + p.php + "."
+          : "Send exactly \u20b1" + p.php + " to:";
+        const nm = document.getElementById("gcName");
+        nm.textContent = GCASH.name;
+        nm.hidden = !GCASH.name;
+        const nu = document.getElementById("gcNum");
+        nu.textContent = GCASH.number;
+        nu.hidden = !GCASH.number;
         const qr = document.getElementById("gcQr");
         if (GCASH.qr) { qr.src = GCASH.qr; qr.hidden = false; } else { qr.hidden = true; }
       }
