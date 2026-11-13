@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin.html
 
-Sitemap: https://seven25-ui.github.io/seven-gigs/sitemap.xml
+Sitemap: https://sevengigs.online/sitemap.xml

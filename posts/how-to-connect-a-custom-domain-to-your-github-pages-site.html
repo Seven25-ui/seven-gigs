@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>How to Connect a Custom Domain to Your GitHub Pages Site | Seven Gigs</title>
   <meta name="description" content="A free GitHub Pages site can use your own domain name. Here is a simple step-by-step guide to connect it, turn on HTTPS, and fix the most common problems.">
-  <link rel="canonical" href="https://seven25-ui.github.io/seven-gigs/posts/how-to-connect-a-custom-domain-to-your-github-pages-site.html">
+  <link rel="canonical" href="https://sevengigs.online/posts/how-to-connect-a-custom-domain-to-your-github-pages-site.html">
   <meta property="og:site_name" content="Seven Gigs">
   <meta property="og:type" content="article">
   <meta property="og:title" content="How to Connect a Custom Domain to Your GitHub Pages Site">
   <meta property="og:description" content="A free GitHub Pages site can use your own domain name. Here is a simple step-by-step guide to connect it, turn on HTTPS, and fix the most common problems.">
-  <meta property="og:url" content="https://seven25-ui.github.io/seven-gigs/posts/how-to-connect-a-custom-domain-to-your-github-pages-site.html">
-  <meta property="og:image" content="https://seven25-ui.github.io/seven-gigs/og-image.png">
+  <meta property="og:url" content="https://sevengigs.online/posts/how-to-connect-a-custom-domain-to-your-github-pages-site.html">
+  <meta property="og:image" content="https://sevengigs.online/og-image.png">
   <meta property="article:published_time" content="2026-11-06T12:01:10.607Z">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Connect a Custom Domain to Your GitHub Pages Site","description":"A free GitHub Pages site can use your own domain name. Here is a simple step-by-step guide to connect it, turn on HTTPS, and fix the most common problems.","datePublished":"2026-11-06T12:01:10.607Z","dateModified":"2026-11-06T12:01:10.607Z","image":"https://seven25-ui.github.io/seven-gigs/og-image.png","mainEntityOfPage":"https://seven25-ui.github.io/seven-gigs/posts/how-to-connect-a-custom-domain-to-your-github-pages-site.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Connect a Custom Domain to Your GitHub Pages Site","description":"A free GitHub Pages site can use your own domain name. Here is a simple step-by-step guide to connect it, turn on HTTPS, and fix the most common problems.","datePublished":"2026-11-06T12:01:10.607Z","dateModified":"2026-11-06T12:01:10.607Z","image":"https://sevengigs.online/og-image.png","mainEntityOfPage":"https://sevengigs.online/posts/how-to-connect-a-custom-domain-to-your-github-pages-site.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
 </head>
 <body>
   <header class="top">
@@ -30,6 +30,7 @@
       <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
       <nav aria-label="Main" id="mainNav">
         <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
         <a href="../about.html">About</a>
         <a href="../contact.html">Contact</a>
       </nav>
@@ -44,10 +45,10 @@
     <article class="body"><p>GitHub Pages gives you a free website at an address like yourname.github.io. It works well, but a custom domain looks more professional and is easier for clients and visitors to remember. It is also a better choice if you plan to apply for ads or want a brand people can trust. The good news is that connecting a domain to GitHub Pages is free on the GitHub side, and it only takes a few settings.</p><p>What you need</p><p>- A GitHub repository that already publishes a site with GitHub Pages<br>- A domain name that you own, bought from any registrar<br>- Access to the DNS settings of that domain</p><p>Step 1: Decide between a main domain and a subdomain</p><p>A main domain looks like example.com. A subdomain looks like blog.example.com or gigs.example.com. If you already use your main domain for another site, such as a portfolio, a subdomain is the easiest choice because you can keep both sites running at the same time.</p><p>Step 2: Add the custom domain in GitHub</p><p>Open your repository on GitHub and go to Settings, then Pages. Find the field named Custom domain, type your domain or subdomain, and save. GitHub will try to check it. It is normal to see a DNS warning at this point because you have not set up the DNS records yet.</p><p>Step 3: Add the DNS records at your registrar</p><p>Log in to the place where you manage your domain and open the DNS settings.</p><p>For a subdomain, add a CNAME record. The name is the subdomain part, for example blog or gigs, and the value is your GitHub address, which looks like yourusername.github.io. Do not add the repository name to the value.</p><p>For a main domain, add four A records that point to GitHub&#39;s servers: 185.199.108.153, 185.199.109.153, 185.199.110.153, and 185.199.111.153. Some people also add a CNAME record for www that points to yourusername.github.io, so both versions of the address work.</p><p>Always double check these values on GitHub&#39;s official documentation before you save them, because hosting details can change over time.</p><p>Step 4: Wait for DNS to update</p><p>DNS changes can take a few minutes, and sometimes up to a day. During this time your site may not load on the new address. This is normal. You can check again after an hour.</p><p>Step 5: Turn on HTTPS</p><p>Go back to Settings, then Pages. Once GitHub has verified your domain, you will see a checkbox named Enforce HTTPS. Turn it on. HTTPS makes your site secure, and many services expect it. If the checkbox is greyed out, wait a little longer and refresh the page. GitHub needs time to create the certificate.</p><p>Step 6: Make sure the CNAME file stays in your repository</p><p>When you save a custom domain, GitHub usually adds a file named CNAME to your repository. If your site is built by a GitHub Action or a script, make sure that file is included in the final output. If it disappears after a build, your custom domain will quietly stop working.</p><p>Common problems and fixes</p><p>- The site shows a 404 page. Check that your CNAME or A records are correct and that the custom domain in GitHub matches exactly.<br>- HTTPS is not available. Wait for the certificate to finish, or remove the domain and add it again.<br>- The old address still shows. Clear your browser cache or try a private window.<br>- Links and images are broken. If you used full links that include the old address, change them to relative links or to your new domain.<br>- Search and sitemap files are wrong. If you have a sitemap or canonical links, update them to the new domain.</p><p>After the domain works</p><p>Update every place where you shared your old address, like your Upwork profile, your social media, and your portfolio. Keep the old github.io address working too, because GitHub will redirect it to your new domain.</p><p>A custom domain does not make a website good by itself, but it makes it look more serious and gives you full control of your address. If you ever change where your site is hosted, you can keep the same domain and only change the DNS records. That is one of the biggest reasons to start with your own domain early.</p></article>
     <div class="share">
       <strong>Share this post</strong>
-      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-connect-a-custom-domain-to-your-github-pages-site.html" target="_blank" rel="noopener">Facebook</a>
-      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-connect-a-custom-domain-to-your-github-pages-site.html&amp;text=How%20to%20Connect%20a%20Custom%20Domain%20to%20Your%20GitHub%20Pages%20Site" target="_blank" rel="noopener">X</a>
-      <a href="https://t.me/share/url?url=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-connect-a-custom-domain-to-your-github-pages-site.html&amp;text=How%20to%20Connect%20a%20Custom%20Domain%20to%20Your%20GitHub%20Pages%20Site" target="_blank" rel="noopener">Telegram</a>
-      <a href="https://wa.me/?text=How%20to%20Connect%20a%20Custom%20Domain%20to%20Your%20GitHub%20Pages%20Site%20https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-connect-a-custom-domain-to-your-github-pages-site.html" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-connect-a-custom-domain-to-your-github-pages-site.html" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-connect-a-custom-domain-to-your-github-pages-site.html&amp;text=How%20to%20Connect%20a%20Custom%20Domain%20to%20Your%20GitHub%20Pages%20Site" target="_blank" rel="noopener">X</a>
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-connect-a-custom-domain-to-your-github-pages-site.html&amp;text=How%20to%20Connect%20a%20Custom%20Domain%20to%20Your%20GitHub%20Pages%20Site" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/?text=How%20to%20Connect%20a%20Custom%20Domain%20to%20Your%20GitHub%20Pages%20Site%20https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-connect-a-custom-domain-to-your-github-pages-site.html" target="_blank" rel="noopener">WhatsApp</a>
       <button type="button" id="copyLink">Copy link</button>
     </div>
     <section class="related"><h2>Keep reading</h2>
@@ -73,6 +74,7 @@
       </div>
       <nav aria-label="Footer">
         <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
         <a href="../about.html">About</a>
         <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy Policy</a>

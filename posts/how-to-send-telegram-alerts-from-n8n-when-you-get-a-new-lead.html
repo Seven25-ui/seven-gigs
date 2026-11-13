@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>How to Send Telegram Alerts From n8n When You Get a New Lead | Seven Gigs</title>
   <meta name="description" content="Get an instant message on your phone every time a form, order, or lead comes in. This beginner guide shows how to connect n8n to a Telegram bot.">
-  <link rel="canonical" href="https://seven25-ui.github.io/seven-gigs/posts/how-to-send-telegram-alerts-from-n8n-when-you-get-a-new-lead.html">
+  <link rel="canonical" href="https://sevengigs.online/posts/how-to-send-telegram-alerts-from-n8n-when-you-get-a-new-lead.html">
   <meta property="og:site_name" content="Seven Gigs">
   <meta property="og:type" content="article">
   <meta property="og:title" content="How to Send Telegram Alerts From n8n When You Get a New Lead">
   <meta property="og:description" content="Get an instant message on your phone every time a form, order, or lead comes in. This beginner guide shows how to connect n8n to a Telegram bot.">
-  <meta property="og:url" content="https://seven25-ui.github.io/seven-gigs/posts/how-to-send-telegram-alerts-from-n8n-when-you-get-a-new-lead.html">
-  <meta property="og:image" content="https://seven25-ui.github.io/seven-gigs/og-image.png">
+  <meta property="og:url" content="https://sevengigs.online/posts/how-to-send-telegram-alerts-from-n8n-when-you-get-a-new-lead.html">
+  <meta property="og:image" content="https://sevengigs.online/og-image.png">
   <meta property="article:published_time" content="2026-11-12T23:30:20.576Z">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Send Telegram Alerts From n8n When You Get a New Lead","description":"Get an instant message on your phone every time a form, order, or lead comes in. This beginner guide shows how to connect n8n to a Telegram bot.","datePublished":"2026-11-12T23:30:20.576Z","dateModified":"2026-11-12T23:30:20.576Z","image":"https://seven25-ui.github.io/seven-gigs/og-image.png","mainEntityOfPage":"https://seven25-ui.github.io/seven-gigs/posts/how-to-send-telegram-alerts-from-n8n-when-you-get-a-new-lead.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Send Telegram Alerts From n8n When You Get a New Lead","description":"Get an instant message on your phone every time a form, order, or lead comes in. This beginner guide shows how to connect n8n to a Telegram bot.","datePublished":"2026-11-12T23:30:20.576Z","dateModified":"2026-11-12T23:30:20.576Z","image":"https://sevengigs.online/og-image.png","mainEntityOfPage":"https://sevengigs.online/posts/how-to-send-telegram-alerts-from-n8n-when-you-get-a-new-lead.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
 </head>
 <body>
   <header class="top">
@@ -30,6 +30,7 @@
       <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
       <nav aria-label="Main" id="mainNav">
         <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
         <a href="../about.html">About</a>
         <a href="../contact.html">Contact</a>
       </nav>
@@ -44,10 +45,10 @@
     <article class="body"><p>One of the most useful small automations you can build is an alert on your phone. When a new lead, order, or message arrives, you get a Telegram notification right away. It is simple, it works on any phone, and it is a feature many small business owners are happy to pay for. This guide shows the basic steps using n8n and a Telegram bot.</p><p>What you need</p><p>- An n8n workflow (self-hosted or cloud)<br>- A Telegram account<br>- Something that triggers the alert, such as a webhook, a form, or a Google Sheets change</p><p>Step 1: Create a Telegram bot</p><p>Open Telegram and search for BotFather, the official bot for creating other bots. Send the command /newbot and follow the questions. You will choose a name and a username that ends with &quot;bot.&quot; At the end, BotFather gives you a token. This token works like a password for your bot, so keep it private and never post it in public.</p><p>Step 2: Start a chat with your bot</p><p>Search for your new bot in Telegram and press Start. The bot can only message you after you have started a conversation with it. If you want alerts in a group, add the bot to the group first.</p><p>Step 3: Find your chat ID</p><p>n8n needs to know where to send the message. The simplest way is to use a Telegram Trigger node in a test workflow, send a message to your bot, and read the chat ID from the data that arrives. The chat ID is a number that identifies you or your group.</p><p>Step 4: Add your credentials in n8n</p><p>In n8n, create new Telegram credentials and paste your bot token. Save it. n8n stores it safely, so you do not need to place the token inside your workflow nodes.</p><p>Step 5: Build the workflow</p><p>Create a new workflow and start with your trigger, for example a Webhook node that receives form data. Then add a Telegram node and choose the &quot;Send Message&quot; action. Select your credentials, paste your chat ID, and write the message.</p><p>Step 6: Use data from the trigger</p><p>A good alert includes details. In the message field, you can insert values from the previous step with n8n expressions. For example, your message could include the name, email, and message of the new lead. Keep it short and easy to read, like:</p><p>New lead: name, email, and a one-line message.</p><p>Step 7: Test it</p><p>Click the test button and send a sample request to your webhook. You should receive a Telegram message within seconds. If nothing arrives, check three things: the token, the chat ID, and whether you pressed Start in the chat with your bot.</p><p>Step 8: Activate the workflow</p><p>When everything works, switch the workflow to Active and use the production webhook URL in your form. From now on, every new lead will send you an alert automatically.</p><p>Ideas to improve it</p><p>- Send alerts to a group so a whole team can see them<br>- Add a simple check so you only get alerts for valid leads<br>- Include a link that opens the row in Google Sheets<br>- Send a different alert for urgent messages<br>- Add a second step that also saves the lead to a spreadsheet</p><p>Common problems</p><p>- Bot does not send: make sure you started the chat with the bot first<br>- Wrong chat ID: group IDs often start with a minus sign, so copy the whole number<br>- Token leaked: if you shared your token by mistake, create a new one in BotFather and update your credentials</p><p>Final thoughts</p><p>A Telegram alert workflow only takes a few minutes to build, but it shows clients that you can connect real tools and solve a real problem. Record a short screen video of the alert arriving, add it to your portfolio, and use it as a simple example in your Upwork proposals.</p></article>
     <div class="share">
       <strong>Share this post</strong>
-      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-send-telegram-alerts-from-n8n-when-you-get-a-new-lead.html" target="_blank" rel="noopener">Facebook</a>
-      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-send-telegram-alerts-from-n8n-when-you-get-a-new-lead.html&amp;text=How%20to%20Send%20Telegram%20Alerts%20From%20n8n%20When%20You%20Get%20a%20New%20Lead" target="_blank" rel="noopener">X</a>
-      <a href="https://t.me/share/url?url=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-send-telegram-alerts-from-n8n-when-you-get-a-new-lead.html&amp;text=How%20to%20Send%20Telegram%20Alerts%20From%20n8n%20When%20You%20Get%20a%20New%20Lead" target="_blank" rel="noopener">Telegram</a>
-      <a href="https://wa.me/?text=How%20to%20Send%20Telegram%20Alerts%20From%20n8n%20When%20You%20Get%20a%20New%20Lead%20https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fhow-to-send-telegram-alerts-from-n8n-when-you-get-a-new-lead.html" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-send-telegram-alerts-from-n8n-when-you-get-a-new-lead.html" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-send-telegram-alerts-from-n8n-when-you-get-a-new-lead.html&amp;text=How%20to%20Send%20Telegram%20Alerts%20From%20n8n%20When%20You%20Get%20a%20New%20Lead" target="_blank" rel="noopener">X</a>
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-send-telegram-alerts-from-n8n-when-you-get-a-new-lead.html&amp;text=How%20to%20Send%20Telegram%20Alerts%20From%20n8n%20When%20You%20Get%20a%20New%20Lead" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/?text=How%20to%20Send%20Telegram%20Alerts%20From%20n8n%20When%20You%20Get%20a%20New%20Lead%20https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-send-telegram-alerts-from-n8n-when-you-get-a-new-lead.html" target="_blank" rel="noopener">WhatsApp</a>
       <button type="button" id="copyLink">Copy link</button>
     </div>
     <section class="related"><h2>Keep reading</h2>
@@ -73,6 +74,7 @@
       </div>
       <nav aria-label="Footer">
         <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
         <a href="../about.html">About</a>
         <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy Policy</a>

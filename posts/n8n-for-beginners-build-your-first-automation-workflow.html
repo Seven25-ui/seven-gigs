@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>n8n for Beginners: Build Your First Automation Workflow | Seven Gigs</title>
   <meta name="description" content="n8n lets you connect apps without heavy coding. Here is how I built my first workflow on my own PC.">
-  <link rel="canonical" href="https://seven25-ui.github.io/seven-gigs/posts/n8n-for-beginners-build-your-first-automation-workflow.html">
+  <link rel="canonical" href="https://sevengigs.online/posts/n8n-for-beginners-build-your-first-automation-workflow.html">
   <meta property="og:site_name" content="Seven Gigs">
   <meta property="og:type" content="article">
   <meta property="og:title" content="n8n for Beginners: Build Your First Automation Workflow">
   <meta property="og:description" content="n8n lets you connect apps without heavy coding. Here is how I built my first workflow on my own PC.">
-  <meta property="og:url" content="https://seven25-ui.github.io/seven-gigs/posts/n8n-for-beginners-build-your-first-automation-workflow.html">
-  <meta property="og:image" content="https://seven25-ui.github.io/seven-gigs/og-image.png">
+  <meta property="og:url" content="https://sevengigs.online/posts/n8n-for-beginners-build-your-first-automation-workflow.html">
+  <meta property="og:image" content="https://sevengigs.online/og-image.png">
   <meta property="article:published_time" content="2026-11-01T15:00:24.185Z">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"n8n for Beginners: Build Your First Automation Workflow","description":"n8n lets you connect apps without heavy coding. Here is how I built my first workflow on my own PC.","datePublished":"2026-11-01T15:00:24.185Z","dateModified":"2026-11-01T15:00:24.185Z","image":"https://seven25-ui.github.io/seven-gigs/og-image.png","mainEntityOfPage":"https://seven25-ui.github.io/seven-gigs/posts/n8n-for-beginners-build-your-first-automation-workflow.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"n8n for Beginners: Build Your First Automation Workflow","description":"n8n lets you connect apps without heavy coding. Here is how I built my first workflow on my own PC.","datePublished":"2026-11-01T15:00:24.185Z","dateModified":"2026-11-01T15:00:24.185Z","image":"https://sevengigs.online/og-image.png","mainEntityOfPage":"https://sevengigs.online/posts/n8n-for-beginners-build-your-first-automation-workflow.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
 </head>
 <body>
   <header class="top">
@@ -30,6 +30,7 @@
       <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
       <nav aria-label="Main" id="mainNav">
         <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
         <a href="../about.html">About</a>
         <a href="../contact.html">Contact</a>
       </nav>
@@ -44,10 +45,10 @@
     <article class="body"><p>Automation jobs are everywhere on Upwork, and n8n comes up again and again. When I started learning it, I wanted a simple way to practice before applying to jobs. This is how I got my first workflow running, step by step.</p><p>What is n8n?</p><p>n8n is a tool where you connect blocks, called nodes, to make things happen automatically. For example: when someone fills out a form, save their details to a spreadsheet and send an email. You drag the nodes, connect them, and test.</p><p>Why learn it as a freelancer?</p><p>Many small businesses want to save time on boring tasks like lead forms, follow-up emails, and support replies. If you can build these flows, you have a skill clients ask for. It also looks good in a portfolio.</p><p>How I run it on my PC</p><p>I run n8n locally on my Windows PC. You need Node.js installed first. Then open PowerShell and run:</p><p>npx n8n</p><p>Wait until it starts, then open http://localhost:5678 in your browser. Create your owner account and you are in. Your workflows run on your own computer, so they only work while n8n is running.</p><p>My first workflow</p><p>My first real workflow had four nodes:</p><p>1. Webhook (POST): receives data, like a name and email, sent from a form.<br>2. Edit Fields: cleans up the data and keeps only what I need.<br>3. If: checks a condition, for example whether the message has an email address.<br>4. Google Sheets (Append): saves the row into a spreadsheet.</p><p>That small flow already looks like real client work: a lead comes in, gets checked, and gets saved.</p><p>How to build yours</p><p>1. Create a new workflow and add a Webhook node.<br>2. Add an Edit Fields node and set the values you want to keep.<br>3. Add an If node with a simple rule.<br>4. Connect Google Sheets and choose Append Row.<br>5. Click Test workflow and send sample data to the webhook.<br>6. Check your sheet. If the row appears, it works.</p><p>Mistakes to avoid</p><p>- Do not skip testing each node one by one. Find errors early.<br>- Never share your credentials, API keys, or webhook URLs in public.<br>- Remember that a local n8n stops when your PC or terminal closes. For real clients, you would host it online.</p><p>What to do next</p><p>Once the basic flow works, add an AI step. For example, send the message to an AI model and save the summary or score in your sheet. That turns a simple automation into something clients will pay for.</p><p>Start small, finish one working flow, and save a screenshot for your portfolio. One finished project teaches more than ten tutorials.</p></article>
     <div class="share">
       <strong>Share this post</strong>
-      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fn8n-for-beginners-build-your-first-automation-workflow.html" target="_blank" rel="noopener">Facebook</a>
-      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fn8n-for-beginners-build-your-first-automation-workflow.html&amp;text=n8n%20for%20Beginners%3A%20Build%20Your%20First%20Automation%20Workflow" target="_blank" rel="noopener">X</a>
-      <a href="https://t.me/share/url?url=https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fn8n-for-beginners-build-your-first-automation-workflow.html&amp;text=n8n%20for%20Beginners%3A%20Build%20Your%20First%20Automation%20Workflow" target="_blank" rel="noopener">Telegram</a>
-      <a href="https://wa.me/?text=n8n%20for%20Beginners%3A%20Build%20Your%20First%20Automation%20Workflow%20https%3A%2F%2Fseven25-ui.github.io%2Fseven-gigs%2Fposts%2Fn8n-for-beginners-build-your-first-automation-workflow.html" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsevengigs.online%2Fposts%2Fn8n-for-beginners-build-your-first-automation-workflow.html" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fn8n-for-beginners-build-your-first-automation-workflow.html&amp;text=n8n%20for%20Beginners%3A%20Build%20Your%20First%20Automation%20Workflow" target="_blank" rel="noopener">X</a>
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fn8n-for-beginners-build-your-first-automation-workflow.html&amp;text=n8n%20for%20Beginners%3A%20Build%20Your%20First%20Automation%20Workflow" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/?text=n8n%20for%20Beginners%3A%20Build%20Your%20First%20Automation%20Workflow%20https%3A%2F%2Fsevengigs.online%2Fposts%2Fn8n-for-beginners-build-your-first-automation-workflow.html" target="_blank" rel="noopener">WhatsApp</a>
       <button type="button" id="copyLink">Copy link</button>
     </div>
     <section class="related"><h2>Keep reading</h2>
@@ -73,6 +74,7 @@
       </div>
       <nav aria-label="Footer">
         <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
         <a href="../about.html">About</a>
         <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy Policy</a>
