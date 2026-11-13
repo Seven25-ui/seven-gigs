@@ -12,8 +12,9 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Store | Seven Gigs">
   <meta property="og:description" content="Digital products for freelancers: prompt packs and guides made from real Upwork experience.">
-  <meta property="og:url" content="https://seven25-ui.github.io/seven-gigs/store.html">
-  <meta property="og:image" content="https://seven25-ui.github.io/seven-gigs/og-image.png">
+  <link rel="canonical" href="https://sevengigs.online/store.html">
+  <meta property="og:url" content="https://sevengigs.online/store.html">
+  <meta property="og:image" content="https://sevengigs.online/og-image.png">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -65,14 +66,14 @@
   <main class="wrap">
     <section class="hero">
       <h1>Tools for freelancers who are just starting.</h1>
-      <p>Made from real Upwork experience. Pay with PayPal, card, or GCash and get your file by email.</p>
+      <p>Made from real Upwork experience. Pay with GCash and get your file by email.</p>
     </section>
 
     <div class="products" id="products" aria-live="polite"></div>
 
     <section class="note">
       <h2>How buying works</h2>
-      <p>Press Buy, pick PayPal (or card) or GCash, and pay. Then email me your receipt or reference number. I check the payment and send your file by email, usually within 24 hours. Questions before you buy? <a href="contact.html">Message me</a>. I reply by email, in writing only.</p>
+      <p>Press Buy, scan the GCash QR, and pay the exact amount. Then email me your receipt or reference number. I check the payment and send your file by email, usually within 24 hours. Questions before you buy? <a href="contact.html">Message me</a>. I reply by email, in writing only.</p>
     </section>
   </main>
 
@@ -137,13 +138,15 @@
         desc: "Ready-to-use AI prompts that turn a job post into a proposal that sounds like you, not a template.",
         items: ["40+ prompts for proposals, replies, and profile writing", "Works with ChatGPT, Gemini, and Claude", "Made for first-time freelancers"],
         usd: 5, php: 249, link: ""
-      },
-      {
+      }
+      /* Add this back when the guide file is ready (put a comma after the first product):
+      ,{
         title: "How to Win Your First Upwork Client",
         desc: "A step-by-step guide to getting your first job on Upwork with no reviews, from real experience.",
         items: ["Profile setup and your first proposals", "How to spot and avoid scams", "How to work with clients through chat only"],
         usd: 7, php: 349, link: ""
       }
+      */
     ];
     /* ===== END EDIT ===== */
 
