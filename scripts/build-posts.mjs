@@ -8,7 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 // ====== CHANGE THIS when you connect a custom domain (no trailing slash) ======
-const SITE_URL = "https://seven25-ui.github.io/seven-gigs";
+const SITE_URL = "https://sevengigs.online";
 // ===============================================================================
 const SITE_NAME = "Seven Gigs";
 const AUTHOR = "Gene";
@@ -143,6 +143,7 @@ function pageHtml(post, slug, related) {
       <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
       <nav aria-label="Main" id="mainNav">
         <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
         <a href="../about.html">About</a>
         <a href="../contact.html">Contact</a>
       </nav>
@@ -174,6 +175,7 @@ function pageHtml(post, slug, related) {
       </div>
       <nav aria-label="Footer">
         <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
         <a href="../about.html">About</a>
         <a href="../contact.html">Contact</a>
         <a href="../privacy.html">Privacy Policy</a>
@@ -234,7 +236,7 @@ for (const f of existing) {
 fs.writeFileSync(path.join(POSTS_DIR, "slugs.json"), JSON.stringify(slugMap, null, 2) + "\n");
 
 // sitemap
-const staticPages = ["", "about.html", "contact.html", "privacy.html", "terms.html"];
+const staticPages = ["", "store.html", "about.html", "contact.html", "privacy.html", "terms.html"];
 const urls = [
   ...staticPages.map((p) => `  <url><loc>${SITE_URL}/${p}</loc></url>`),
   ...items.map(
