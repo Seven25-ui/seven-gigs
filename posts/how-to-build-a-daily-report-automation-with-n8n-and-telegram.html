@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Build a Daily Report Automation With n8n and Telegram | Seven Gigs</title>
+  <meta name="description" content="Get a short summary message every morning without opening a spreadsheet. This beginner guide shows how to schedule it in n8n and send it to Telegram.">
+  <link rel="canonical" href="https://sevengigs.online/posts/how-to-build-a-daily-report-automation-with-n8n-and-telegram.html">
+  <meta property="og:site_name" content="Seven Gigs">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Build a Daily Report Automation With n8n and Telegram">
+  <meta property="og:description" content="Get a short summary message every morning without opening a spreadsheet. This beginner guide shows how to schedule it in n8n and send it to Telegram.">
+  <meta property="og:url" content="https://sevengigs.online/posts/how-to-build-a-daily-report-automation-with-n8n-and-telegram.html">
+  <meta property="og:image" content="https://sevengigs.online/og-image.png">
+  <meta property="article:published_time" content="2026-11-14T12:19:29.401Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Build a Daily Report Automation With n8n and Telegram","description":"Get a short summary message every morning without opening a spreadsheet. This beginner guide shows how to schedule it in n8n and send it to Telegram.","datePublished":"2026-11-14T12:19:29.401Z","dateModified":"2026-11-14T12:19:29.401Z","image":"https://sevengigs.online/og-image.png","mainEntityOfPage":"https://sevengigs.online/posts/how-to-build-a-daily-report-automation-with-n8n-and-telegram.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+      <nav aria-label="Main" id="mainNav">
+        <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap post">
+    <a class="back" href="../index.html">&larr; Back to all posts</a><br>
+    <span class="tag">Automation</span>
+    <h1>How to Build a Daily Report Automation With n8n and Telegram</h1>
+    <div class="meta">Nov 14, 2026 &middot; 4 min read</div>
+    <article class="body"><p>A daily report is one of the most useful small automations. Instead of opening a spreadsheet every morning to count new leads or orders, you get a short message on your phone. It is also a nice service to offer to small businesses, because owners love seeing the key numbers without searching for them. This guide shows how to build one with n8n, Google Sheets, and Telegram.</p><p>What you need</p><p>- An n8n workflow (self-hosted or cloud)<br>- A Google Sheet with some data, for example a list of leads with a date column and a status column<br>- A Telegram bot and your chat ID (you can create a bot with BotFather)</p><p>The idea</p><p>A schedule starts the workflow every morning. n8n reads the rows from your sheet, counts what you care about, builds a short message, and sends it to Telegram.</p><p>Step 1: Add a Schedule Trigger</p><p>Create a new workflow and add a Schedule Trigger node. Choose to run every day at a fixed hour, for example 8 in the morning. Check the timezone setting of your n8n instance or workflow, because a wrong timezone is the most common reason a report arrives at the wrong hour.</p><p>Step 2: Read the data from Google Sheets</p><p>Add a Google Sheets node and choose the action to get rows. Connect your Google account, pick your spreadsheet and sheet, and test it. You should see your rows appear as items in the output. If your sheet is very large, you can use a filter so n8n only reads the rows you need.</p><p>Step 3: Combine and count</p><p>n8n handles each row as a separate item, and you want one report. Add a node that turns the rows into one result. The Aggregate node can combine the items into a list. Then a Code node or a few simple steps can count things like the number of new leads, or the number of rows where the status is &quot;new.&quot;</p><p>If you are new to code, keep it very small. For example, count the rows and put the result into a field called total. You can also ask an AI tool to help you write the few lines, and then test the output carefully.</p><p>Step 4: Build the message</p><p>Add an Edit Fields node and create a field named message. Use n8n expressions to insert your numbers into a short text. A good report is short and easy to read, like this:</p><p>Daily report: 5 new leads, 2 follow-ups due today, 1 order waiting.</p><p>Do not send a long wall of text. Three or four numbers are enough.</p><p>Step 5: Send it to Telegram</p><p>Add a Telegram node and choose the action to send a message. Select your credentials, paste your chat ID, and place the message field in the text box. Save the credentials in n8n instead of pasting your bot token inside the workflow, and never share the token publicly.</p><p>Step 6: Test it</p><p>Use the manual test button first. You should receive a Telegram message within seconds. If nothing arrives, check three things: the bot token, the chat ID, and whether you started a chat with your bot by pressing Start.</p><p>Step 7: Activate the workflow</p><p>When everything works, switch the workflow to Active. From now on, the schedule will run by itself every day. Check the executions list after the first morning to make sure it worked.</p><p>Ideas to improve it</p><p>- Add the date to the message<br>- Send a different message when the number is zero, such as a friendly note that there are no new leads<br>- Add a link that opens the Google Sheet<br>- Send the report to a group so a whole team can see it<br>- Add a weekly summary on Monday<br>- Add an error alert, so you get a message if the workflow fails</p><p>Common problems</p><p>- The report arrives at the wrong time: check the timezone settings<br>- The numbers are wrong: check the column names and make sure dates and statuses in the sheet are written in a consistent way<br>- Many messages arrive at once: your workflow may be running once per row instead of once per report, so make sure you combine the items before the Telegram node<br>- Google Sheets cannot connect: reconnect your Google account and check that the sheet is shared with it</p><p>Turn it into a portfolio piece</p><p>Record a short screen video that shows the sheet, the workflow, and the message arriving on your phone. Add it to your portfolio and mention it in proposals for small business automation jobs. A working demo that solves a real, simple problem is often more convincing than a long list of skills.</p><p>Final thoughts</p><p>A daily report workflow teaches the core pattern of most automations: a trigger starts the process, data is collected, something is calculated, and a message is sent. Once you understand that pattern, you can adapt it for sales numbers, support tickets, social media stats, or anything else a client wants to follow.</p></article>
+    <div class="share">
+      <strong>Share this post</strong>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-build-a-daily-report-automation-with-n8n-and-telegram.html" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-build-a-daily-report-automation-with-n8n-and-telegram.html&amp;text=How%20to%20Build%20a%20Daily%20Report%20Automation%20With%20n8n%20and%20Telegram" target="_blank" rel="noopener">X</a>
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-build-a-daily-report-automation-with-n8n-and-telegram.html&amp;text=How%20to%20Build%20a%20Daily%20Report%20Automation%20With%20n8n%20and%20Telegram" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/?text=How%20to%20Build%20a%20Daily%20Report%20Automation%20With%20n8n%20and%20Telegram%20https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-build-a-daily-report-automation-with-n8n-and-telegram.html" target="_blank" rel="noopener">WhatsApp</a>
+      <button type="button" id="copyLink">Copy link</button>
+    </div>
+    <section class="related"><h2>Keep reading</h2>
+      <a class="rel" href="how-to-send-telegram-alerts-from-n8n-when-you-get-a-new-lead.html">
+        <span class="tag">Automation</span>
+        <span>How to Send Telegram Alerts From n8n When You Get a New Lead</span>
+      </a>
+      <a class="rel" href="how-to-build-a-free-faq-chatbot-with-n8n-supabase-and-gemini.html">
+        <span class="tag">Automation</span>
+        <span>How to Build a Free FAQ Chatbot With n8n, Supabase, and Gemini</span>
+      </a>
+      <a class="rel" href="5-simple-n8n-automations-you-can-sell-on-upwork.html">
+        <span class="tag">Automation</span>
+        <span>5 Simple n8n Automations You Can Sell on Upwork</span>
+      </a></section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div>
+        <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+        <p>Tips, AI tools, and tutorials for freelancers.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms &amp; Disclaimer</a>
+      </nav>
+    </div>
+    <div class="wrap copy">&copy; <span id="yr">2026</span> Seven Gigs. All rights reserved.</div>
+  </footer>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+    document.getElementById("copyLink").addEventListener("click", async function (e) {
+      var b = e.currentTarget;
+      try { await navigator.clipboard.writeText(location.href.split("#")[0]); b.textContent = "Copied!"; }
+      catch (err) { b.textContent = "Press Ctrl+C to copy the address bar"; }
+      setTimeout(function () { b.textContent = "Copy link"; }, 2000);
+    });
+  </script>
+  <script src="../menu.js"></script>
+</body>
+</html>

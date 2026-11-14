@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Use AI to Debug Your Code Without Just Copy-Pasting | Seven Gigs</title>
+  <meta name="description" content="AI can help you find bugs faster, but only if you ask the right way. Here is a simple routine to debug with ChatGPT, Gemini, or Claude and actually learn from it.">
+  <link rel="canonical" href="https://sevengigs.online/posts/how-to-use-ai-to-debug-your-code-without-just-copy-pasting.html">
+  <meta property="og:site_name" content="Seven Gigs">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Use AI to Debug Your Code Without Just Copy-Pasting">
+  <meta property="og:description" content="AI can help you find bugs faster, but only if you ask the right way. Here is a simple routine to debug with ChatGPT, Gemini, or Claude and actually learn from it.">
+  <meta property="og:url" content="https://sevengigs.online/posts/how-to-use-ai-to-debug-your-code-without-just-copy-pasting.html">
+  <meta property="og:image" content="https://sevengigs.online/og-image.png">
+  <meta property="article:published_time" content="2026-11-14T12:19:29.401Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Use AI to Debug Your Code Without Just Copy-Pasting","description":"AI can help you find bugs faster, but only if you ask the right way. Here is a simple routine to debug with ChatGPT, Gemini, or Claude and actually learn from it.","datePublished":"2026-11-14T12:19:29.401Z","dateModified":"2026-11-14T12:19:29.401Z","image":"https://sevengigs.online/og-image.png","mainEntityOfPage":"https://sevengigs.online/posts/how-to-use-ai-to-debug-your-code-without-just-copy-pasting.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+      <nav aria-label="Main" id="mainNav">
+        <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap post">
+    <a class="back" href="../index.html">&larr; Back to all posts</a><br>
+    <span class="tag">AI Tools</span>
+    <h1>How to Use AI to Debug Your Code Without Just Copy-Pasting</h1>
+    <div class="meta">Nov 14, 2026 &middot; 4 min read</div>
+    <article class="body"><p>Every beginner meets error messages, and AI tools can make them less scary. But many people paste their whole project into an AI chat, copy the answer, and move on without understanding what happened. That may fix the problem today, but it leaves you stuck tomorrow. This guide shows a better routine so you fix the bug and learn at the same time.</p><p>1. Read the error first</p><p>Before you ask AI anything, read the last line of the error message. It usually tells you the type of the problem, such as a missing name, a wrong type, or a file that cannot be found. Then look at the line number that the error points to. Even a quick guess helps, because it gives you something to compare with the AI&#39;s answer.</p><p>2. Give the AI the right information</p><p>A good question has four parts:</p><p>- What you wanted the code to do<br>- What actually happened, including the full error message<br>- The small part of the code that causes it<br>- What you already tried</p><p>A weak question is &quot;my code does not work.&quot; A strong one is: &quot;I want to read a CSV file and print the first column. I get a FileNotFoundError on line 5. Here is the function. I checked that the file is in the same folder.&quot;</p><p>3. Keep the example small</p><p>If your project has hundreds of lines, copy only the function or the few lines around the error. If the bug is hard to find, try to make a tiny version that still shows the problem. Often, while you do that, you find the bug yourself. A small example also gets better answers.</p><p>4. Ask for an explanation, not only a fix</p><p>Add a line like this to your question: &quot;Explain what caused the error in simple words, then show the corrected code.&quot; You can also ask: &quot;What should I check next time I see this error?&quot; This turns every bug into a small lesson.</p><p>5. Ask for more than one possible cause</p><p>Sometimes the first guess is wrong. You can ask: &quot;List the three most likely causes of this error, from most to least likely, and how I can test each one.&quot; Then check them one by one. This builds a real debugging habit.</p><p>6. Use AI to add print statements</p><p>If you do not know where the problem is, ask AI where to add print statements to follow the value of your variables. Run the code and look at the output. Seeing the real values often makes the bug obvious.</p><p>7. Test the answer yourself</p><p>Do not trust any answer blindly. Run the fixed code. Try a few normal inputs and one strange input, like an empty value or a very large number. AI can make mistakes, invent functions that do not exist, or use old syntax. If something looks strange, check the official documentation.</p><p>8. Protect private information</p><p>Never paste passwords, API keys, tokens, private client data, or database addresses into an AI chat. Replace them with fake values like YOUR_KEY_HERE before you ask. If a secret has been pasted by mistake, treat it as exposed and create a new one.</p><p>9. Learn the pattern</p><p>After you fix a bug, write one line in a notes file: what the error was, what caused it, and how you fixed it. After a few weeks you will notice that you make the same few mistakes again and again, and you will start to catch them without help.</p><p>A simple prompt you can reuse</p><p>&quot;I am a beginner in Python. I want my code to [goal]. I get this error: [paste the full error]. Here is the relevant code: [paste a small part]. I already tried [what you tried]. Please explain the cause in simple words, show the fix, and tell me how to avoid this mistake next time.&quot;</p><p>When not to use AI</p><p>If you are working through an exercise to learn a new idea, try to solve it for at least 15 minutes before you ask for help. Struggling a little is how your brain learns. Use AI as a tutor that gives hints, not as a machine that does the homework.</p><p>Final thoughts</p><p>AI is a very good debugging partner when you give it clear information and stay in control. Read the error, ask for an explanation, test the answer, and keep notes. Over time you will need AI less for simple bugs, and use it for harder ones where it can really save you time.</p></article>
+    <div class="share">
+      <strong>Share this post</strong>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-use-ai-to-debug-your-code-without-just-copy-pasting.html" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-use-ai-to-debug-your-code-without-just-copy-pasting.html&amp;text=How%20to%20Use%20AI%20to%20Debug%20Your%20Code%20Without%20Just%20Copy-Pasting" target="_blank" rel="noopener">X</a>
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-use-ai-to-debug-your-code-without-just-copy-pasting.html&amp;text=How%20to%20Use%20AI%20to%20Debug%20Your%20Code%20Without%20Just%20Copy-Pasting" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/?text=How%20to%20Use%20AI%20to%20Debug%20Your%20Code%20Without%20Just%20Copy-Pasting%20https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-use-ai-to-debug-your-code-without-just-copy-pasting.html" target="_blank" rel="noopener">WhatsApp</a>
+      <button type="button" id="copyLink">Copy link</button>
+    </div>
+    <section class="related"><h2>Keep reading</h2>
+      <a class="rel" href="how-to-use-ai-to-improve-your-english-without-sounding-like-a-robot.html">
+        <span class="tag">AI Tools</span>
+        <span>How to Use AI to Improve Your English Without Sounding Like a Robot</span>
+      </a>
+      <a class="rel" href="chatgpt-vs-claude-vs-gemini-which-free-ai-tool-should-a-beginner-use.html">
+        <span class="tag">AI Tools</span>
+        <span>ChatGPT vs Claude vs Gemini: Which Free AI Tool Should a Beginner Use?</span>
+      </a>
+      <a class="rel" href="how-to-use-ai-to-research-a-client-before-you-pitch.html">
+        <span class="tag">AI Tools</span>
+        <span>How to Use AI to Research a Client Before You Pitch</span>
+      </a></section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div>
+        <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+        <p>Tips, AI tools, and tutorials for freelancers.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms &amp; Disclaimer</a>
+      </nav>
+    </div>
+    <div class="wrap copy">&copy; <span id="yr">2026</span> Seven Gigs. All rights reserved.</div>
+  </footer>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+    document.getElementById("copyLink").addEventListener("click", async function (e) {
+      var b = e.currentTarget;
+      try { await navigator.clipboard.writeText(location.href.split("#")[0]); b.textContent = "Copied!"; }
+      catch (err) { b.textContent = "Press Ctrl+C to copy the address bar"; }
+      setTimeout(function () { b.textContent = "Copy link"; }, 2000);
+    });
+  </script>
+  <script src="../menu.js"></script>
+</body>
+</html>
