@@ -194,6 +194,7 @@ function pageHtml(post, slug, related) {
       setTimeout(function () { b.textContent = "Copy link"; }, 2000);
     });
   </script>
+  <script src="/analytics.js" defer></script>
   <script src="../menu.js"></script>
 </body>
 </html>
