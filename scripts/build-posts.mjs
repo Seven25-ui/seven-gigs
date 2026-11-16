@@ -165,6 +165,7 @@ function pageHtml(post, slug, related) {
       <button type="button" id="copyLink">Copy link</button>
     </div>
     ${relatedHtml}
+    <div id="continue"></div>
   </main>
 
   <footer class="foot">
@@ -195,6 +196,7 @@ function pageHtml(post, slug, related) {
     });
   </script>
   <script src="/analytics.js" defer></script>
+  <script src="/reading.js" defer></script>
   <script src="../menu.js"></script>
 </body>
 </html>
@@ -235,6 +237,15 @@ for (const f of existing) {
 }
 
 fs.writeFileSync(path.join(POSTS_DIR, "slugs.json"), JSON.stringify(slugMap, null, 2) + "\n");
+
+// small list of posts (no post text) used by reading.js for "Continue reading"
+const indexData = items.map((p) => ({
+  slug: p.slug,
+  title: p.title,
+  category: p.category,
+  created_at: p.created_at,
+}));
+fs.writeFileSync(path.join(POSTS_DIR, "index.json"), JSON.stringify(indexData) + "\n");
 
 // sitemap
 const staticPages = ["", "store.html", "about.html", "contact.html", "privacy.html", "terms.html"];
