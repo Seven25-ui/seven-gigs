@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Build Static Blog Pages Automatically With GitHub Actions | Seven Gigs</title>
+  <meta name="description" content="Learn how a small script and a GitHub Action can create real HTML pages for every blog post, plus a sitemap, without doing it by hand.">
+  <link rel="canonical" href="https://sevengigs.online/posts/how-to-build-static-blog-pages-automatically-with-github-actions.html">
+  <meta property="og:site_name" content="Seven Gigs">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Build Static Blog Pages Automatically With GitHub Actions">
+  <meta property="og:description" content="Learn how a small script and a GitHub Action can create real HTML pages for every blog post, plus a sitemap, without doing it by hand.">
+  <meta property="og:url" content="https://sevengigs.online/posts/how-to-build-static-blog-pages-automatically-with-github-actions.html">
+  <meta property="og:image" content="https://sevengigs.online/og-image.png">
+  <meta property="article:published_time" content="2026-11-16T12:47:44.156Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Build Static Blog Pages Automatically With GitHub Actions","description":"Learn how a small script and a GitHub Action can create real HTML pages for every blog post, plus a sitemap, without doing it by hand.","datePublished":"2026-11-16T12:47:44.156Z","dateModified":"2026-11-16T12:47:44.156Z","image":"https://sevengigs.online/og-image.png","mainEntityOfPage":"https://sevengigs.online/posts/how-to-build-static-blog-pages-automatically-with-github-actions.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+      <nav aria-label="Main" id="mainNav">
+        <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap post">
+    <a class="back" href="../index.html">&larr; Back to all posts</a><br>
+    <span class="tag">Automation</span>
+    <h1>How to Build Static Blog Pages Automatically With GitHub Actions</h1>
+    <div class="meta">Nov 16, 2026 &middot; 4 min read</div>
+    <article class="body"><p>If your blog loads posts with JavaScript from a database, visitors see the content, but some search engines and social media tools may not see it as easily. A simple fix is to create a real HTML page for each post. Doing that by hand for every new post is boring, so you can automate it with GitHub Actions. This guide explains the idea and the basic setup.</p><p>The problem</p><p>Imagine a blog where the posts live in a database and the home page loads them with JavaScript. The page itself is almost empty until the script runs. A visitor in a browser sees everything, but a crawler or a link preview tool may only see the empty page. If every post also has its own static HTML file with a title, a description, and the full text, those tools can read it without running any script.</p><p>The idea</p><p>A small Node script does four jobs:</p><p>1. It reads your published posts from the database<br>2. It writes one HTML page per post into a folder such as posts<br>3. It writes a sitemap.xml file with all page addresses<br>4. It writes a robots.txt file that points to the sitemap</p><p>GitHub Actions then runs the script for you, on a schedule and whenever you change the script, and saves the new files back into your repository.</p><p>Step 1: Write the script</p><p>Keep the script simple and put it in a folder such as scripts. It should read the public address and the public (anon) key of your database, request only published posts, and create the files. Create a safe slug from each title, for example how-to-use-upwork-connects-wisely, and use it as the file name. Add a canonical link and a description to every page.</p><p>An important safety rule: use only the public anon key, and protect your data with access rules in the database, so the key can only read published posts. Never put an admin or service role key in a public repository.</p><p>Another safety rule: if the database returns zero posts but pages already exist, stop the script instead of deleting everything. A temporary error should never wipe your pages.</p><p>Step 2: Create the workflow file</p><p>In your repository, create the folder .github/workflows and add a file such as build-posts.yml. A simple version looks like this:</p><pre><code>name: Build post pages
+
+on:
+  schedule:
+    - cron: &quot;23 */6 * * *&quot;
+  workflow_dispatch:
+  push:
+    paths:
+      - &quot;.github/workflows/build-posts.yml&quot;
+      - &quot;scripts/build-posts.mjs&quot;
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/build-posts.mjs
+      - name: Commit changes
+        run: |
+          git config user.name &quot;github-actions[bot]&quot;
+          git config user.email &quot;41898282+github-actions[bot]@users.noreply.github.com&quot;
+          git add -A posts sitemap.xml robots.txt
+          if git diff --cached --quiet; then
+            echo &quot;No changes to commit&quot;
+          else
+            git commit -m &quot;Update post pages&quot;
+            git push
+          fi</code></pre><p>What the parts mean</p><p>- schedule runs the job at regular times. The times use UTC, so they may not match your local time.<br>- workflow_dispatch adds a Run workflow button in the Actions tab, so you can run it manually.<br>- push runs the job once when you change the workflow or the script.<br>- permissions allows the job to save the new files in your repository.<br>- The last step commits files only when something changed.</p><p>Step 3: Allow the Action to write</p><p>In your repository, open Settings, then Actions, then General, and check the workflow permissions. The job must be allowed to write to the repository, or the push step will fail.</p><p>Step 4: Run it and check</p><p>Open the Actions tab, choose your workflow, and click Run workflow. A green check means it worked. Open the posts folder in your repository and look for the new HTML files. Then open one of them on your live site and check the title, the text, and the links.</p><p>Step 5: Keep working normally</p><p>When you publish a new post, the home page shows it right away. The static page appears the next time the Action runs. If you want it faster, press Run workflow.</p><p>Useful tips</p><p>- Test your script locally with a small sample file of fake posts before you use real data<br>- Pull the latest changes before you edit your repository on your computer, because the Action also makes commits<br>- Keep the same slug for a post after you publish it, so links do not break<br>- Update the sitemap address in the script if you change your domain</p><p>Final thoughts</p><p>This setup is small, but it teaches an important automation pattern: a trigger starts a job, the job collects data, creates files, and saves the result. Once you understand it, you can use the same pattern for reports, backups, and many other tasks.</p></article>
+    <div class="share">
+      <strong>Share this post</strong>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-build-static-blog-pages-automatically-with-github-actions.html" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-build-static-blog-pages-automatically-with-github-actions.html&amp;text=How%20to%20Build%20Static%20Blog%20Pages%20Automatically%20With%20GitHub%20Actions" target="_blank" rel="noopener">X</a>
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-build-static-blog-pages-automatically-with-github-actions.html&amp;text=How%20to%20Build%20Static%20Blog%20Pages%20Automatically%20With%20GitHub%20Actions" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/?text=How%20to%20Build%20Static%20Blog%20Pages%20Automatically%20With%20GitHub%20Actions%20https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-build-static-blog-pages-automatically-with-github-actions.html" target="_blank" rel="noopener">WhatsApp</a>
+      <button type="button" id="copyLink">Copy link</button>
+    </div>
+    <section class="related"><h2>Keep reading</h2>
+      <a class="rel" href="how-to-build-a-daily-report-automation-with-n8n-and-telegram.html">
+        <span class="tag">Automation</span>
+        <span>How to Build a Daily Report Automation With n8n and Telegram</span>
+      </a>
+      <a class="rel" href="how-to-send-telegram-alerts-from-n8n-when-you-get-a-new-lead.html">
+        <span class="tag">Automation</span>
+        <span>How to Send Telegram Alerts From n8n When You Get a New Lead</span>
+      </a>
+      <a class="rel" href="how-to-build-a-free-faq-chatbot-with-n8n-supabase-and-gemini.html">
+        <span class="tag">Automation</span>
+        <span>How to Build a Free FAQ Chatbot With n8n, Supabase, and Gemini</span>
+      </a></section>
+    <div id="continue"></div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div>
+        <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+        <p>Tips, AI tools, and tutorials for freelancers.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms &amp; Disclaimer</a>
+      </nav>
+    </div>
+    <div class="wrap copy">&copy; <span id="yr">2026</span> Seven Gigs. All rights reserved.</div>
+  </footer>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+    document.getElementById("copyLink").addEventListener("click", async function (e) {
+      var b = e.currentTarget;
+      try { await navigator.clipboard.writeText(location.href.split("#")[0]); b.textContent = "Copied!"; }
+      catch (err) { b.textContent = "Press Ctrl+C to copy the address bar"; }
+      setTimeout(function () { b.textContent = "Copy link"; }, 2000);
+    });
+  </script>
+  <script src="/analytics.js" defer></script>
+  <script src="/reading.js" defer></script>
+  <script src="../menu.js"></script>
+</body>
+</html>
