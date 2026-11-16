@@ -17,6 +17,12 @@
   var current = m ? decodeURIComponent(m[1]) : null;
   if (!box && !current) return;
 
+  // Safe date reader: some browsers cannot parse 6-digit fractions such as .401846+08:00
+  function ts(value) {
+    var t = Date.parse(String(value).replace(/(\.\d{3})\d+/, "$1"));
+    return isNaN(t) ? 0 : t;
+  }
+
   function loadHistory() {
     try {
       var v = JSON.parse(localStorage.getItem(KEY));
@@ -56,11 +62,11 @@
     var scored = all
       .filter(function (p) { return !seen[p.slug]; })
       .map(function (p) {
-        var days = Math.max(0, (now - new Date(p.created_at).getTime()) / 86400000);
+        var days = Math.max(0, (now - ts(p.created_at)) / 86400000);
         return { post: p, score: (weight[p.category] || 0) + 2 / (1 + days / 30) };
       })
       .sort(function (a, b) {
-        return b.score - a.score || new Date(b.post.created_at) - new Date(a.post.created_at);
+        return b.score - a.score || ts(b.post.created_at) - ts(a.post.created_at);
       });
 
     // at most 2 from the same category, so the list is not one-sided
