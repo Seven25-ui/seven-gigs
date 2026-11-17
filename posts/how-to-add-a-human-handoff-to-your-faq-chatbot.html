@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Add a Human Handoff to Your FAQ Chatbot | Seven Gigs</title>
+  <meta name="description" content="A good chatbot knows when to stop. Learn when to pass a conversation to a real person, and how to build a simple handoff with n8n and Telegram.">
+  <link rel="canonical" href="https://sevengigs.online/posts/how-to-add-a-human-handoff-to-your-faq-chatbot.html">
+  <meta property="og:site_name" content="Seven Gigs">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Add a Human Handoff to Your FAQ Chatbot">
+  <meta property="og:description" content="A good chatbot knows when to stop. Learn when to pass a conversation to a real person, and how to build a simple handoff with n8n and Telegram.">
+  <meta property="og:url" content="https://sevengigs.online/posts/how-to-add-a-human-handoff-to-your-faq-chatbot.html">
+  <meta property="og:image" content="https://sevengigs.online/og-image.png">
+  <meta property="article:published_time" content="2026-11-17T01:57:52.917Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Add a Human Handoff to Your FAQ Chatbot","description":"A good chatbot knows when to stop. Learn when to pass a conversation to a real person, and how to build a simple handoff with n8n and Telegram.","datePublished":"2026-11-17T01:57:52.917Z","dateModified":"2026-11-17T01:57:52.917Z","image":"https://sevengigs.online/og-image.png","mainEntityOfPage":"https://sevengigs.online/posts/how-to-add-a-human-handoff-to-your-faq-chatbot.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+      <nav aria-label="Main" id="mainNav">
+        <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap post">
+    <a class="back" href="../index.html">&larr; Back to all posts</a><br>
+    <span class="tag">Automation</span>
+    <h1>How to Add a Human Handoff to Your FAQ Chatbot</h1>
+    <div class="meta">Nov 17, 2026 &middot; 4 min read</div>
+    <article class="body"><p>A chatbot that answers common questions can save a business a lot of time. But no bot knows everything. If it keeps guessing when it should stop, customers get frustrated and the business can lose trust. A simple human handoff solves this: when the bot cannot help, it tells the customer honestly and sends the conversation to a real person. This guide explains when to hand off and how to build a basic version with n8n.</p><p>Why every bot needs a handoff</p><p>- Some questions are not in your FAQ<br>- Some customers are upset and need a person<br>- Some topics, such as payments, complaints, or private data, should not be handled by a bot alone<br>- A wrong answer can be worse than no answer</p><p>A bot that says &quot;I am not sure, let me ask a person&quot; is more trustworthy than a bot that invents an answer.</p><p>When should the bot hand off?</p><p>Choose a few clear rules. Common triggers are:</p><p>- The customer asks for a human, with words like &quot;agent,&quot; &quot;person,&quot; or &quot;talk to someone&quot;<br>- The bot cannot find a good answer in the FAQ<br>- The customer repeats the same question two or three times<br>- The message contains words about complaints, refunds, or urgent problems<br>- The conversation is about sensitive information</p><p>You can start with the first two and add more later.</p><p>Step 1: Plan the message to the customer</p><p>Write a short, honest message that explains what will happen. For example:</p><p>&quot;I am not sure about that one, so I will pass your question to our team. They usually reply within one business day. Please leave your name and the best way to contact you.&quot;</p><p>Be clear that the customer is talking to a bot at the start, and be realistic about the response time. Do not promise instant answers if nobody is online.</p><p>Step 2: Detect the trigger in n8n</p><p>In your workflow, after the message arrives and before the bot answers, add an IF node. Check for the words that mean &quot;I want a person.&quot; For the &quot;no answer&quot; case, tell your AI agent in its instructions to reply with a special phrase, such as NEEDS_HUMAN, when the FAQ does not contain the answer. Then use another IF node to check whether the reply contains that phrase.</p><p>Step 3: Alert a real person</p><p>On the handoff path, add a Telegram node that sends a message to the owner or the support team. Include the useful details:</p><p>- The customer&#39;s name or chat identifier<br>- The last message from the customer<br>- A short summary of the conversation, if you have one<br>- The time of the message</p><p>A good alert saves the person from searching through the whole chat.</p><p>Step 4: Tell the customer</p><p>Add a node that sends the handoff message from Step 1 back to the customer, so they know the question was received.</p><p>Step 5: Save a record</p><p>Add a Google Sheets node, or another storage node, and write a row with the date, the customer, the question, and the status, such as &quot;waiting for human.&quot; This creates a simple list of open cases and helps you improve the bot later, because you can see which questions are missing from the FAQ.</p><p>Step 6: Stop the bot from interrupting</p><p>After a handoff, the bot should not keep answering the same customer while the human is working, or the two answers may conflict. Store a simple flag for that customer, such as handoff = true, in your database or sheet, and check it at the start of the workflow. When the case is closed, reset the flag.</p><p>Step 7: Test with real examples</p><p>Try at least these tests:</p><p>- A question that is in the FAQ, to confirm the bot answers it<br>- A question that is not in the FAQ, to confirm the handoff starts<br>- A message that says &quot;I want to talk to a person&quot;<br>- A message in a different tone, such as an angry complaint<br>- A second message after the handoff, to confirm the bot stays quiet</p><p>Fix any case where the bot answers when it should not, or hands off when it should answer.</p><p>Ideas to improve it</p><p>- Show business hours in the handoff message<br>- Add a daily summary of unanswered questions<br>- Turn repeated unanswered questions into new FAQ entries<br>- Send urgent cases to a different chat or group</p><p>Common problems</p><p>- The bot never hands off: check your special phrase and the IF conditions<br>- The bot hands off too often: improve your FAQ and the agent instructions<br>- The owner misses the alert: use a group chat that more than one person reads<br>- The customer is left waiting: always send a confirmation and an honest time estimate</p><p>Final thoughts</p><p>A human handoff is a small feature, but it changes how people feel about a chatbot. It shows that the business cares about getting the answer right. If you build chatbots for clients, include a handoff in every project, and mention it in your proposals. It is the difference between a clever demo and a tool that people can trust.</p></article>
+    <div class="share">
+      <strong>Share this post</strong>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-add-a-human-handoff-to-your-faq-chatbot.html" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-add-a-human-handoff-to-your-faq-chatbot.html&amp;text=How%20to%20Add%20a%20Human%20Handoff%20to%20Your%20FAQ%20Chatbot" target="_blank" rel="noopener">X</a>
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-add-a-human-handoff-to-your-faq-chatbot.html&amp;text=How%20to%20Add%20a%20Human%20Handoff%20to%20Your%20FAQ%20Chatbot" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/?text=How%20to%20Add%20a%20Human%20Handoff%20to%20Your%20FAQ%20Chatbot%20https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-add-a-human-handoff-to-your-faq-chatbot.html" target="_blank" rel="noopener">WhatsApp</a>
+      <button type="button" id="copyLink">Copy link</button>
+    </div>
+    <section class="related"><h2>Keep reading</h2>
+      <a class="rel" href="how-to-build-static-blog-pages-automatically-with-github-actions.html">
+        <span class="tag">Automation</span>
+        <span>How to Build Static Blog Pages Automatically With GitHub Actions</span>
+      </a>
+      <a class="rel" href="how-to-build-a-daily-report-automation-with-n8n-and-telegram.html">
+        <span class="tag">Automation</span>
+        <span>How to Build a Daily Report Automation With n8n and Telegram</span>
+      </a>
+      <a class="rel" href="how-to-send-telegram-alerts-from-n8n-when-you-get-a-new-lead.html">
+        <span class="tag">Automation</span>
+        <span>How to Send Telegram Alerts From n8n When You Get a New Lead</span>
+      </a></section>
+    <div id="continue"></div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div>
+        <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+        <p>Tips, AI tools, and tutorials for freelancers.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms &amp; Disclaimer</a>
+      </nav>
+    </div>
+    <div class="wrap copy">&copy; <span id="yr">2026</span> Seven Gigs. All rights reserved.</div>
+  </footer>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+    document.getElementById("copyLink").addEventListener("click", async function (e) {
+      var b = e.currentTarget;
+      try { await navigator.clipboard.writeText(location.href.split("#")[0]); b.textContent = "Copied!"; }
+      catch (err) { b.textContent = "Press Ctrl+C to copy the address bar"; }
+      setTimeout(function () { b.textContent = "Copy link"; }, 2000);
+    });
+  </script>
+  <script src="/analytics.js" defer></script>
+  <script src="/reading.js" defer></script>
+  <script src="../menu.js"></script>
+</body>
+</html>

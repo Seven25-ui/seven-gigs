@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Git Basics for Beginners: Clone, Commit, Push, and Pull in PowerShell | Seven Gigs</title>
+  <meta name="description" content="Git can look scary at first. Here are the few commands you really need to download a project, save your changes, and send them to GitHub.">
+  <link rel="canonical" href="https://sevengigs.online/posts/git-basics-for-beginners-clone-commit-push-and-pull-in-powershell.html">
+  <meta property="og:site_name" content="Seven Gigs">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Git Basics for Beginners: Clone, Commit, Push, and Pull in PowerShell">
+  <meta property="og:description" content="Git can look scary at first. Here are the few commands you really need to download a project, save your changes, and send them to GitHub.">
+  <meta property="og:url" content="https://sevengigs.online/posts/git-basics-for-beginners-clone-commit-push-and-pull-in-powershell.html">
+  <meta property="og:image" content="https://sevengigs.online/og-image.png">
+  <meta property="article:published_time" content="2026-11-17T01:57:52.917Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Git Basics for Beginners: Clone, Commit, Push, and Pull in PowerShell","description":"Git can look scary at first. Here are the few commands you really need to download a project, save your changes, and send them to GitHub.","datePublished":"2026-11-17T01:57:52.917Z","dateModified":"2026-11-17T01:57:52.917Z","image":"https://sevengigs.online/og-image.png","mainEntityOfPage":"https://sevengigs.online/posts/git-basics-for-beginners-clone-commit-push-and-pull-in-powershell.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+      <nav aria-label="Main" id="mainNav">
+        <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap post">
+    <a class="back" href="../index.html">&larr; Back to all posts</a><br>
+    <span class="tag">Tutorials</span>
+    <h1>Git Basics for Beginners: Clone, Commit, Push, and Pull in PowerShell</h1>
+    <div class="meta">Nov 17, 2026 &middot; 4 min read</div>
+    <article class="body"><p>Git is a tool that keeps the history of your files, and GitHub is a website that stores Git projects online. If you build websites or small apps, you will meet both soon. You do not need to learn everything at once. A few commands cover most daily work. This guide uses PowerShell on Windows, but the commands are the same on Mac and Linux.</p><p>Step 1: Check that Git is installed</p><p>Open PowerShell and type:</p><pre><code>git --version</code></pre><p>If you see a version number, Git is ready. If not, install it from the official Git website, then close and open PowerShell again.</p><p>Step 2: Set your name and email</p><p>Git writes your name and email in every commit. You only need to do this once on a computer:</p><pre><code>git config --global user.name &quot;Your Name&quot;
+git config --global user.email &quot;you@example.com&quot;</code></pre><p>Use the same email that is connected to your GitHub account, so that your commits are linked to you.</p><p>Step 3: Clone a repository</p><p>Cloning downloads a copy of a project to your computer. Go to the folder where you want it, then run:</p><pre><code>cd $HOME\Documents
+git clone https://github.com/username/project-name.git
+cd project-name</code></pre><p>Replace the address with the one from the green Code button on your repository page. The last command moves you inside the project folder.</p><p>Step 4: See what changed</p><p>After you edit files, check the state of your project:</p><pre><code>git status
+git diff</code></pre><p>git status lists the files that changed. git diff shows the exact lines that changed. Reading these before you save is a good habit, because you can catch mistakes early.</p><p>Step 5: Stage and commit your changes</p><p>A commit is a saved snapshot with a short message. First you choose what goes into it, then you save it:</p><pre><code>git add -A
+git commit -m &quot;Describe what you changed&quot;</code></pre><p>The message should be short and clear, such as &quot;Fix contact page link&quot; or &quot;Add new blog post page.&quot; Your future self will thank you.</p><p>Step 6: Pull before you push</p><p>If other people, or automatic tools, change the same repository, your computer may be behind. Download the latest changes first:</p><pre><code>git pull --rebase</code></pre><p>This puts your new commits on top of the latest version. It avoids many common errors.</p><p>Step 7: Push to GitHub</p><p>Now send your commits to GitHub:</p><pre><code>git push</code></pre><p>The first time, a browser window may open so that you can sign in. After that, the page on GitHub shows your changes. If your site uses GitHub Pages, the live website updates after a minute or two.</p><p>The everyday routine in short</p><pre><code>git pull --rebase
+# edit your files
+git status
+git add -A
+git commit -m &quot;Your message&quot;
+git pull --rebase
+git push</code></pre><p>Common errors and what they mean</p><p>- Updates were rejected: the online version has newer commits. Run git pull --rebase, then try git push again<br>- Merge conflict: two changes touched the same lines. Open the file, look for the markers that Git inserted, keep the correct text, remove the markers, then add and commit again<br>- Not a git repository: you are in the wrong folder. Use cd to go into the project folder<br>- Authentication failed: sign in again, and check that your GitHub account has access to the repository</p><p>Keep secrets out of Git</p><p>Never commit passwords, private keys, or secret tokens, especially in a public repository. Create a file named .gitignore and list files that should be skipped, such as .env. If you pushed a secret by mistake, treat it as exposed and create a new one, because deleting it from the latest file is not enough.</p><p>Useful extra commands</p><pre><code>git log --oneline
+git restore filename</code></pre><p>git log --oneline shows a short history of commits. git restore filename throws away your unsaved changes in one file, so use it carefully.</p><p>A good habit to build</p><p>Make small commits often, and write clear messages. Pull before you start working and before you push. If something goes wrong, do not panic. Read the message, check git status, and search for the exact error text.</p><p>Final thoughts</p><p>Git feels strange for the first week, then it becomes automatic. Learn clone, status, add, commit, pull, and push, and you can already work on real projects. The rest you can learn when you need it.</p></article>
+    <div class="share">
+      <strong>Share this post</strong>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsevengigs.online%2Fposts%2Fgit-basics-for-beginners-clone-commit-push-and-pull-in-powershell.html" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fgit-basics-for-beginners-clone-commit-push-and-pull-in-powershell.html&amp;text=Git%20Basics%20for%20Beginners%3A%20Clone%2C%20Commit%2C%20Push%2C%20and%20Pull%20in%20PowerShell" target="_blank" rel="noopener">X</a>
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fgit-basics-for-beginners-clone-commit-push-and-pull-in-powershell.html&amp;text=Git%20Basics%20for%20Beginners%3A%20Clone%2C%20Commit%2C%20Push%2C%20and%20Pull%20in%20PowerShell" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/?text=Git%20Basics%20for%20Beginners%3A%20Clone%2C%20Commit%2C%20Push%2C%20and%20Pull%20in%20PowerShell%20https%3A%2F%2Fsevengigs.online%2Fposts%2Fgit-basics-for-beginners-clone-commit-push-and-pull-in-powershell.html" target="_blank" rel="noopener">WhatsApp</a>
+      <button type="button" id="copyLink">Copy link</button>
+    </div>
+    <section class="related"><h2>Keep reading</h2>
+      <a class="rel" href="how-to-get-your-new-website-into-google-with-search-console.html">
+        <span class="tag">Tutorials</span>
+        <span>How to Get Your New Website Into Google With Search Console</span>
+      </a>
+      <a class="rel" href="python-for-beginners-a-simple-6-week-learning-plan.html">
+        <span class="tag">Tutorials</span>
+        <span>Python for Beginners: A Simple 6-Week Learning Plan</span>
+      </a>
+      <a class="rel" href="how-to-keep-your-api-keys-safe-when-you-host-on-github-pages.html">
+        <span class="tag">Tutorials</span>
+        <span>How to Keep Your API Keys Safe When You Host on GitHub Pages</span>
+      </a></section>
+    <div id="continue"></div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div>
+        <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+        <p>Tips, AI tools, and tutorials for freelancers.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms &amp; Disclaimer</a>
+      </nav>
+    </div>
+    <div class="wrap copy">&copy; <span id="yr">2026</span> Seven Gigs. All rights reserved.</div>
+  </footer>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+    document.getElementById("copyLink").addEventListener("click", async function (e) {
+      var b = e.currentTarget;
+      try { await navigator.clipboard.writeText(location.href.split("#")[0]); b.textContent = "Copied!"; }
+      catch (err) { b.textContent = "Press Ctrl+C to copy the address bar"; }
+      setTimeout(function () { b.textContent = "Copy link"; }, 2000);
+    });
+  </script>
+  <script src="/analytics.js" defer></script>
+  <script src="/reading.js" defer></script>
+  <script src="../menu.js"></script>
+</body>
+</html>
