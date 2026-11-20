@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Basic SQL for Beginners: Read and Change Data in Supabase | Seven Gigs</title>
+  <meta name="description" content="You do not need to be a database expert to use SQL. Here are the five commands you need to read, add, edit, and delete rows safely in the Supabase SQL Editor.">
+  <link rel="canonical" href="https://sevengigs.online/posts/basic-sql-for-beginners-read-and-change-data-in-supabase.html">
+  <meta property="og:site_name" content="Seven Gigs">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Basic SQL for Beginners: Read and Change Data in Supabase">
+  <meta property="og:description" content="You do not need to be a database expert to use SQL. Here are the five commands you need to read, add, edit, and delete rows safely in the Supabase SQL Editor.">
+  <meta property="og:url" content="https://sevengigs.online/posts/basic-sql-for-beginners-read-and-change-data-in-supabase.html">
+  <meta property="og:image" content="https://sevengigs.online/og-image.png">
+  <meta property="article:published_time" content="2026-11-20T12:53:30.095Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Basic SQL for Beginners: Read and Change Data in Supabase","description":"You do not need to be a database expert to use SQL. Here are the five commands you need to read, add, edit, and delete rows safely in the Supabase SQL Editor.","datePublished":"2026-11-20T12:53:30.095Z","dateModified":"2026-11-20T12:53:30.095Z","image":"https://sevengigs.online/og-image.png","mainEntityOfPage":"https://sevengigs.online/posts/basic-sql-for-beginners-read-and-change-data-in-supabase.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+      <nav aria-label="Main" id="mainNav">
+        <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap post">
+    <a class="back" href="../index.html">&larr; Back to all posts</a><br>
+    <span class="tag">Tutorials</span>
+    <h1>Basic SQL for Beginners: Read and Change Data in Supabase</h1>
+    <div class="meta">Nov 20, 2026 &middot; 3 min read</div>
+    <article class="body"><p>If you use Supabase, you can manage your data in the Table Editor with clicks. But SQL is faster for many tasks, such as adding several rows at once or fixing a typo in many places. SQL looks strange at first, but a few commands cover most daily work.</p><p>All examples use a table called posts with the columns id, title, category, and published. Replace the names with your own.</p><h2>Where to run it</h2><p>In your Supabase project, open the SQL Editor from the left menu. Paste a command, click Run, and read the result below. The SQL Editor runs with strong permissions, so it can ignore the Row Level Security rules that protect your public website. Be careful, because mistakes are real.</p><h2>1. SELECT: read data</h2><p>SELECT shows rows from a table.</p><pre><code>select * from posts;</code></pre><p>The star means all columns. To see only some columns:</p><pre><code>select title, category from posts;</code></pre><h2>2. WHERE: choose which rows</h2><p>WHERE filters the rows. Text values go inside single quotes.</p><pre><code>select title from posts where category = &#39;Tutorials&#39;;</code></pre><p>You can combine conditions with and, or:</p><pre><code>select title from posts
+where category = &#39;Tutorials&#39; and published = true;</code></pre><h2>3. ORDER BY and LIMIT</h2><p>To see the newest rows first and only a few of them:</p><pre><code>select title, created_at from posts
+order by created_at desc
+limit 5;</code></pre><h2>4. Count and group</h2><p>To count rows in each category:</p><pre><code>select category, count(*) from posts
+group by category
+order by category;</code></pre><p>This is also a quick way to find a category with a spelling mistake.</p><h2>5. INSERT: add rows</h2><p>INSERT adds new rows. List the columns, then the values in the same order:</p><pre><code>insert into posts (title, category, published)
+values (&#39;My first post&#39;, &#39;Tutorials&#39;, false);</code></pre><p>You can add several rows by separating them with commas.</p><h2>6. UPDATE: change rows</h2><p>UPDATE changes existing rows. Always include WHERE, or you will change every row in the table.</p><pre><code>update posts
+set published = true
+where title = &#39;My first post&#39;;</code></pre><h2>7. DELETE: remove rows</h2><p>DELETE removes rows, and there is no undo button in the editor. Again, use WHERE.</p><pre><code>delete from posts where title = &#39;My first post&#39;;</code></pre><h2>The safety habit that saves you</h2><p>Before every update or delete, run a select with the same WHERE condition first:</p><pre><code>select * from posts where category = &#39;AI tools&#39;;</code></pre><p>Look at the rows that come back. If they are the ones you want to change, copy the same WHERE into your update:</p><pre><code>update posts set category = &#39;AI Tools&#39; where category = &#39;AI tools&#39;;</code></pre><p>This simple check prevents most accidents.</p><h2>Other safety tips</h2><p>1. Never run update or delete without WHERE<br>2. Make a backup or export the table to CSV before a big change<br>3. Test on a few rows first<br>4. Do not paste secret keys or passwords into the editor or into shared notes<br>5. Keep Row Level Security turned on for tables that your website reads</p><h2>Common errors</h2><p>1. Syntax error: check for missing commas and quotes<br>2. Relation does not exist: the table name is wrong, or it is in another schema<br>3. Column does not exist: check the spelling of the column name<br>4. Text values need single quotes, not double quotes</p><h2>What to learn next</h2><p>When these commands feel easy, try joins to combine two tables, indexes to make searches faster, and constraints to stop wrong values from entering your data. Each one builds on what you just learned.</p><h2>The bottom line</h2><p>Start with select and where. Add insert, update, and delete when you feel comfortable, and always check with a select first. A little SQL makes your data much easier to manage, and it is a skill that clients value.</p></article>
+    <div class="share">
+      <strong>Share this post</strong>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsevengigs.online%2Fposts%2Fbasic-sql-for-beginners-read-and-change-data-in-supabase.html" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fbasic-sql-for-beginners-read-and-change-data-in-supabase.html&amp;text=Basic%20SQL%20for%20Beginners%3A%20Read%20and%20Change%20Data%20in%20Supabase" target="_blank" rel="noopener">X</a>
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fbasic-sql-for-beginners-read-and-change-data-in-supabase.html&amp;text=Basic%20SQL%20for%20Beginners%3A%20Read%20and%20Change%20Data%20in%20Supabase" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/?text=Basic%20SQL%20for%20Beginners%3A%20Read%20and%20Change%20Data%20in%20Supabase%20https%3A%2F%2Fsevengigs.online%2Fposts%2Fbasic-sql-for-beginners-read-and-change-data-in-supabase.html" target="_blank" rel="noopener">WhatsApp</a>
+      <button type="button" id="copyLink">Copy link</button>
+    </div>
+    <section class="related"><h2>Keep reading</h2>
+      <a class="rel" href="git-basics-for-beginners-clone-commit-push-and-pull-in-powershell.html">
+        <span class="tag">Tutorials</span>
+        <span>Git Basics for Beginners: Clone, Commit, Push, and Pull in PowerShell</span>
+      </a>
+      <a class="rel" href="how-to-get-your-new-website-into-google-with-search-console.html">
+        <span class="tag">Tutorials</span>
+        <span>How to Get Your New Website Into Google With Search Console</span>
+      </a>
+      <a class="rel" href="python-for-beginners-a-simple-6-week-learning-plan.html">
+        <span class="tag">Tutorials</span>
+        <span>Python for Beginners: A Simple 6-Week Learning Plan</span>
+      </a></section>
+    <div id="continue"></div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div>
+        <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+        <p>Tips, AI tools, and tutorials for freelancers.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms &amp; Disclaimer</a>
+      </nav>
+    </div>
+    <div class="wrap copy">&copy; <span id="yr">2026</span> Seven Gigs. All rights reserved.</div>
+  </footer>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+    document.getElementById("copyLink").addEventListener("click", async function (e) {
+      var b = e.currentTarget;
+      try { await navigator.clipboard.writeText(location.href.split("#")[0]); b.textContent = "Copied!"; }
+      catch (err) { b.textContent = "Press Ctrl+C to copy the address bar"; }
+      setTimeout(function () { b.textContent = "Copy link"; }, 2000);
+    });
+  </script>
+  <script src="/analytics.js" defer></script>
+  <script src="/reading.js" defer></script>
+  <script src="../menu.js"></script>
+</body>
+</html>

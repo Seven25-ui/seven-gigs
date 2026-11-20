@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Get a Telegram Alert When Your n8n Workflow Fails | Seven Gigs</title>
+  <meta name="description" content="A workflow that fails silently can cost a client real money. Here is how to build an error workflow in n8n that sends you a Telegram message when something breaks.">
+  <link rel="canonical" href="https://sevengigs.online/posts/how-to-get-a-telegram-alert-when-your-n8n-workflow-fails.html">
+  <meta property="og:site_name" content="Seven Gigs">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Get a Telegram Alert When Your n8n Workflow Fails">
+  <meta property="og:description" content="A workflow that fails silently can cost a client real money. Here is how to build an error workflow in n8n that sends you a Telegram message when something breaks.">
+  <meta property="og:url" content="https://sevengigs.online/posts/how-to-get-a-telegram-alert-when-your-n8n-workflow-fails.html">
+  <meta property="og:image" content="https://sevengigs.online/og-image.png">
+  <meta property="article:published_time" content="2026-11-20T12:53:30.095Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Get a Telegram Alert When Your n8n Workflow Fails","description":"A workflow that fails silently can cost a client real money. Here is how to build an error workflow in n8n that sends you a Telegram message when something breaks.","datePublished":"2026-11-20T12:53:30.095Z","dateModified":"2026-11-20T12:53:30.095Z","image":"https://sevengigs.online/og-image.png","mainEntityOfPage":"https://sevengigs.online/posts/how-to-get-a-telegram-alert-when-your-n8n-workflow-fails.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+      <nav aria-label="Main" id="mainNav">
+        <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap post">
+    <a class="back" href="../index.html">&larr; Back to all posts</a><br>
+    <span class="tag">Automation</span>
+    <h1>How to Get a Telegram Alert When Your n8n Workflow Fails</h1>
+    <div class="meta">Nov 20, 2026 &middot; 3 min read</div>
+    <article class="body"><p>An automation that works today can fail tomorrow. An API changes, a login expires, or a spreadsheet gets renamed. If nobody notices, leads are lost and reports are not sent. For client work especially, you want to know the moment something fails. n8n has a simple way to do this: an error workflow.</p><h2>The idea</h2><p>You create a second workflow that starts with an Error Trigger node. Then you tell your main workflow to use it as its error workflow. When the main workflow fails, n8n runs the error workflow and sends you the details. Here we will send them to Telegram.</p><h2>What you need</h2><p>1. n8n running (self-hosted on your PC or in the cloud)<br>2. A Telegram bot and your chat ID (you can create a bot with BotFather)<br>3. Telegram credentials saved in n8n<br>4. At least one workflow you want to protect</p><h2>Step 1: Create the error workflow</h2><p>Create a new workflow and name it clearly, for example &quot;Error alert to Telegram&quot;. Add an Error Trigger node as the first node. This node has no settings. It simply starts the workflow when another workflow reports a failure.</p><h2>Step 2: Add a Telegram node</h2><p>Add a Telegram node and choose the action to send a message. Select your credentials and paste your chat ID. Keep your bot token inside n8n credentials, never inside the workflow text.</p><h2>Step 3: Write a useful message</h2><p>The Error Trigger gives you details about the failed run. You can insert them with n8n expressions. A good alert includes:</p><p>1. The name of the workflow that failed<br>2. The error message<br>3. A link to the failed execution<br>4. The time</p><p>An example message:</p><p>Workflow failed: {{ $json.workflow.name }}<br>Error: {{ $json.execution.error.message }}<br>Open: {{ $json.execution.url }}</p><p>The exact field names can change between n8n versions, so run a test and look at the output of the Error Trigger node to see what is available on your version.</p><h2>Step 4: Connect it to your main workflow</h2><p>Open the workflow you want to protect and open its Settings. Find the option named Error Workflow and choose the one you just created. Save the workflow. Do this for every important workflow. One error workflow can serve all of them.</p><h2>Step 5: Test it</h2><p>Make a test workflow that fails on purpose, for example with a node that points to a wrong address. Set its Error Workflow to your alert workflow, activate it, and let it run. The error workflow is meant for automatic runs of active workflows, so a manual test button may not trigger it. When it works, you should receive a Telegram message within seconds.</p><h2>Step 6: Activate the error workflow</h2><p>Make sure the error workflow itself is saved. Check in the executions list that it ran. If nothing arrives, check three things: the Telegram credentials, the chat ID, and whether you pressed Start in the chat with your bot.</p><h2>Ideas to improve it</h2><p>1. Send alerts to a group so a team can see them<br>2. Add the client&#39;s name to the message, so you know which project is affected<br>3. Log each failure to a Google Sheet, so you can see patterns<br>4. Add a daily summary of failures instead of many messages<br>5. Include a short note on what to check first, such as expired credentials</p><h2>Remember when n8n runs on your own PC</h2><p>If your n8n runs on your computer, it cannot alert you when the computer is off. For client projects, host n8n on a server that stays online. An alert is only useful when the system that sends it is running.</p><h2>The bottom line</h2><p>Error alerts take about ten minutes to build and make your automations much more professional. Clients trust a freelancer who finds problems before they do. Add an error workflow to every project, and mention it in your proposals as part of your standard setup.</p></article>
+    <div class="share">
+      <strong>Share this post</strong>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-get-a-telegram-alert-when-your-n8n-workflow-fails.html" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-get-a-telegram-alert-when-your-n8n-workflow-fails.html&amp;text=How%20to%20Get%20a%20Telegram%20Alert%20When%20Your%20n8n%20Workflow%20Fails" target="_blank" rel="noopener">X</a>
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-get-a-telegram-alert-when-your-n8n-workflow-fails.html&amp;text=How%20to%20Get%20a%20Telegram%20Alert%20When%20Your%20n8n%20Workflow%20Fails" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/?text=How%20to%20Get%20a%20Telegram%20Alert%20When%20Your%20n8n%20Workflow%20Fails%20https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-get-a-telegram-alert-when-your-n8n-workflow-fails.html" target="_blank" rel="noopener">WhatsApp</a>
+      <button type="button" id="copyLink">Copy link</button>
+    </div>
+    <section class="related"><h2>Keep reading</h2>
+      <a class="rel" href="how-to-add-a-human-handoff-to-your-faq-chatbot.html">
+        <span class="tag">Automation</span>
+        <span>How to Add a Human Handoff to Your FAQ Chatbot</span>
+      </a>
+      <a class="rel" href="how-to-build-static-blog-pages-automatically-with-github-actions.html">
+        <span class="tag">Automation</span>
+        <span>How to Build Static Blog Pages Automatically With GitHub Actions</span>
+      </a>
+      <a class="rel" href="how-to-build-a-daily-report-automation-with-n8n-and-telegram.html">
+        <span class="tag">Automation</span>
+        <span>How to Build a Daily Report Automation With n8n and Telegram</span>
+      </a></section>
+    <div id="continue"></div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div>
+        <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+        <p>Tips, AI tools, and tutorials for freelancers.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms &amp; Disclaimer</a>
+      </nav>
+    </div>
+    <div class="wrap copy">&copy; <span id="yr">2026</span> Seven Gigs. All rights reserved.</div>
+  </footer>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+    document.getElementById("copyLink").addEventListener("click", async function (e) {
+      var b = e.currentTarget;
+      try { await navigator.clipboard.writeText(location.href.split("#")[0]); b.textContent = "Copied!"; }
+      catch (err) { b.textContent = "Press Ctrl+C to copy the address bar"; }
+      setTimeout(function () { b.textContent = "Copy link"; }, 2000);
+    });
+  </script>
+  <script src="/analytics.js" defer></script>
+  <script src="/reading.js" defer></script>
+  <script src="../menu.js"></script>
+</body>
+</html>
