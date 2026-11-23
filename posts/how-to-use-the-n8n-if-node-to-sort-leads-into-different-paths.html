@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Use the n8n If Node to Sort Leads Into Different Paths | Seven Gigs</title>
+  <meta name="description" content="The If node lets your n8n workflow make a simple decision. Here is how to sort new leads by budget and send them to different places.">
+  <link rel="canonical" href="https://sevengigs.online/posts/how-to-use-the-n8n-if-node-to-sort-leads-into-different-paths.html">
+  <meta property="og:site_name" content="Seven Gigs">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Use the n8n If Node to Sort Leads Into Different Paths">
+  <meta property="og:description" content="The If node lets your n8n workflow make a simple decision. Here is how to sort new leads by budget and send them to different places.">
+  <meta property="og:url" content="https://sevengigs.online/posts/how-to-use-the-n8n-if-node-to-sort-leads-into-different-paths.html">
+  <meta property="og:image" content="https://sevengigs.online/og-image.png">
+  <meta property="article:published_time" content="2026-11-23T03:59:32.125Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Use the n8n If Node to Sort Leads Into Different Paths","description":"The If node lets your n8n workflow make a simple decision. Here is how to sort new leads by budget and send them to different places.","datePublished":"2026-11-23T03:59:32.125Z","dateModified":"2026-11-23T03:59:32.125Z","image":"https://sevengigs.online/og-image.png","mainEntityOfPage":"https://sevengigs.online/posts/how-to-use-the-n8n-if-node-to-sort-leads-into-different-paths.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+      <nav aria-label="Main" id="mainNav">
+        <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap post">
+    <a class="back" href="../index.html">&larr; Back to all posts</a><br>
+    <span class="tag">Automation</span>
+    <h1>How to Use the n8n If Node to Sort Leads Into Different Paths</h1>
+    <div class="meta">Nov 23, 2026 &middot; 3 min read</div>
+    <article class="body"><p>A workflow that only moves data from one place to another is useful. A workflow that can make a decision is much more useful. In n8n, the If node is the simplest way to do that. In this tutorial, we will sort new leads by budget: big leads go one way, small leads go another way.</p><p>1. The plan</p><p>We will build four steps:</p><p>- A Webhook node that receives a lead (name, email, budget)<br>- An Edit Fields node that keeps only the data we need<br>- An If node that checks the budget<br>- Two Google Sheets nodes, one for big leads and one for normal leads</p><p>2. Add the Webhook node</p><p>Add a Webhook node and set the method to POST. Give it a simple path, such as lead. n8n shows two URLs: a Test URL and a Production URL. The Test URL works only while you click &quot;Listen for test event.&quot; The Production URL works after you activate the workflow. Use the Test URL while you build.</p><p>3. Send a test lead</p><p>With n8n running on your computer, you can send a test lead from PowerShell:</p><p>Invoke-RestMethod -Method Post -Uri &quot;http://localhost:5678/webhook-test/lead&quot; -ContentType &quot;application/json&quot; -Body &#39;{&quot;name&quot;:&quot;Ana&quot;,&quot;email&quot;:&quot;ana@example.com&quot;,&quot;budget&quot;:800}&#39;</p><p>The data should appear in the Webhook node. If nothing appears, check that the node is still listening and that the path matches.</p><p>4. Clean the data with Edit Fields</p><p>Add an Edit Fields node after the Webhook. Create fields called name, email, and budget, and take their values from the incoming data. This step is optional, but it keeps your workflow tidy and makes later steps easier to read.</p><p>5. Add the If node</p><p>Add an If node. Create one condition: the value is the budget field, the operation is Number &gt; Is greater than or equal to, and the second value is 500. The If node has two outputs: true and false. Leads with a budget of 500 or more leave through true, and all others leave through false.</p><p>6. Connect both paths</p><p>Connect the true output to a Google Sheets node that appends a row to a sheet called High Priority. Connect the false output to another Google Sheets node that appends a row to a sheet called Normal. Use the same fields in both so your sheets look consistent.</p><p>7. Test both paths</p><p>Send one lead with a budget of 800 and one with a budget of 100. Check that each one appears in the right sheet. Always test both outputs, because it is easy to connect only one.</p><p>8. Common mistakes</p><p>- The budget arrives as text instead of a number. If the condition fails, check the data type, or fix it in Edit Fields.<br>- A lead arrives without a budget field. Decide what should happen, and add a condition for it if needed.<br>- Only the true output is connected, so the false leads disappear without any error.<br>- You forgot to activate the workflow, so the Production URL does not work.</p><p>9. Where to go next</p><p>Once you understand the If node, you can sort by country, by service type, or by keywords in a message. You can also send high-priority leads a Telegram alert while normal leads only go to a sheet. One small decision makes a simple workflow feel like a real business tool.</p></article>
+    <div class="share">
+      <strong>Share this post</strong>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-use-the-n8n-if-node-to-sort-leads-into-different-paths.html" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-use-the-n8n-if-node-to-sort-leads-into-different-paths.html&amp;text=How%20to%20Use%20the%20n8n%20If%20Node%20to%20Sort%20Leads%20Into%20Different%20Paths" target="_blank" rel="noopener">X</a>
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-use-the-n8n-if-node-to-sort-leads-into-different-paths.html&amp;text=How%20to%20Use%20the%20n8n%20If%20Node%20to%20Sort%20Leads%20Into%20Different%20Paths" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/?text=How%20to%20Use%20the%20n8n%20If%20Node%20to%20Sort%20Leads%20Into%20Different%20Paths%20https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-use-the-n8n-if-node-to-sort-leads-into-different-paths.html" target="_blank" rel="noopener">WhatsApp</a>
+      <button type="button" id="copyLink">Copy link</button>
+    </div>
+    <section class="related"><h2>Keep reading</h2>
+      <a class="rel" href="how-to-get-a-telegram-alert-when-your-n8n-workflow-fails.html">
+        <span class="tag">Automation</span>
+        <span>How to Get a Telegram Alert When Your n8n Workflow Fails</span>
+      </a>
+      <a class="rel" href="how-to-add-a-human-handoff-to-your-faq-chatbot.html">
+        <span class="tag">Automation</span>
+        <span>How to Add a Human Handoff to Your FAQ Chatbot</span>
+      </a>
+      <a class="rel" href="how-to-build-static-blog-pages-automatically-with-github-actions.html">
+        <span class="tag">Automation</span>
+        <span>How to Build Static Blog Pages Automatically With GitHub Actions</span>
+      </a></section>
+    <div id="continue"></div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div>
+        <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+        <p>Tips, AI tools, and tutorials for freelancers.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms &amp; Disclaimer</a>
+      </nav>
+    </div>
+    <div class="wrap copy">&copy; <span id="yr">2026</span> Seven Gigs. All rights reserved.</div>
+  </footer>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+    document.getElementById("copyLink").addEventListener("click", async function (e) {
+      var b = e.currentTarget;
+      try { await navigator.clipboard.writeText(location.href.split("#")[0]); b.textContent = "Copied!"; }
+      catch (err) { b.textContent = "Press Ctrl+C to copy the address bar"; }
+      setTimeout(function () { b.textContent = "Copy link"; }, 2000);
+    });
+  </script>
+  <script src="/analytics.js" defer></script>
+  <script src="/reading.js" defer></script>
+  <script src="../menu.js"></script>
+</body>
+</html>

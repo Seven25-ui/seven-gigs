@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to Rename Files in Bulk With a Small Python Script on Windows | Seven Gigs</title>
+  <meta name="description" content="A short, safe Python script that renames all .txt files in a folder to file_001.txt, file_002.txt, and so on, without overwriting anything.">
+  <link rel="canonical" href="https://sevengigs.online/posts/how-to-rename-files-in-bulk-with-a-small-python-script-on-windows.html">
+  <meta property="og:site_name" content="Seven Gigs">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Rename Files in Bulk With a Small Python Script on Windows">
+  <meta property="og:description" content="A short, safe Python script that renames all .txt files in a folder to file_001.txt, file_002.txt, and so on, without overwriting anything.">
+  <meta property="og:url" content="https://sevengigs.online/posts/how-to-rename-files-in-bulk-with-a-small-python-script-on-windows.html">
+  <meta property="og:image" content="https://sevengigs.online/og-image.png">
+  <meta property="article:published_time" content="2026-11-23T03:59:32.125Z">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Rename Files in Bulk With a Small Python Script on Windows","description":"A short, safe Python script that renames all .txt files in a folder to file_001.txt, file_002.txt, and so on, without overwriting anything.","datePublished":"2026-11-23T03:59:32.125Z","dateModified":"2026-11-23T03:59:32.125Z","image":"https://sevengigs.online/og-image.png","mainEntityOfPage":"https://sevengigs.online/posts/how-to-rename-files-in-bulk-with-a-small-python-script-on-windows.html","author":{"@type":"Person","name":"Gene"},"publisher":{"@type":"Organization","name":"Seven Gigs"}}</script>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mainNav"><span></span><span></span><span></span></button>
+      <nav aria-label="Main" id="mainNav">
+        <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap post">
+    <a class="back" href="../index.html">&larr; Back to all posts</a><br>
+    <span class="tag">Tutorials</span>
+    <h1>How to Rename Files in Bulk With a Small Python Script on Windows</h1>
+    <div class="meta">Nov 23, 2026 &middot; 2 min read</div>
+    <article class="body"><p>Renaming many files by hand is slow and easy to get wrong. A short Python script can do it in a second. This tutorial shows a safe version that renames every .txt file in a folder to file_001.txt, file_002.txt, and so on. It keeps the extension and never overwrites a file.</p><p>1. What you need</p><p>Python installed on your computer. To check, open PowerShell and type:</p><p>python --version</p><p>If you see a version number, you are ready. If not, install Python from python.org first.</p><p>2. Make a safe test folder</p><p>Never test on important files. Create a test folder with fake files:</p><p>mkdir C:\test_rename<br>cd C:\test_rename<br>&quot;zebra&quot;,&quot;apple&quot;,&quot;mango&quot; | ForEach-Object { Set-Content &quot;$_.txt&quot; &quot;hello $_&quot; }<br>Set-Content keep.md &quot;this file should not change&quot;</p><p>You now have three .txt files and one .md file. The .md file is there to prove that the script only touches .txt files.</p><p>3. Save the script</p><p>Open Notepad, paste the code below, and save it as C:\rename.py:</p><p>import sys, uuid<br>from pathlib import Path</p><p>folder = Path(sys.argv[1]) if len(sys.argv) &gt; 1 else Path.cwd()<br>files = sorted(p for p in folder.iterdir() if p.is_file() and p.suffix.lower() == &quot;.txt&quot;)<br>width = max(3, len(str(len(files))))</p><p># Step 1: temporary names, so one file can never overwrite another<br>temps = []<br>for p in files:<br>    t = p.with_name(f&quot;{uuid.uuid4().hex}.tmp&quot;)<br>    p.rename(t)<br>    temps.append(t)</p><p># Step 2: final sequential names<br>for i, t in enumerate(temps, 1):<br>    t.rename(folder / f&quot;file_{i:0{width}d}.txt&quot;)</p><p>print(f&quot;Renamed {len(temps)} files.&quot;)</p><p>4. Run it</p><p>python C:\rename.py C:\test_rename<br>dir C:\test_rename</p><p>You should see file_001.txt, file_002.txt, and file_003.txt, plus keep.md untouched. The files are numbered in alphabetical order of their old names.</p><p>5. Why two steps?</p><p>Imagine a folder that already has a file called file_001.txt. If the script renamed straight to the final names, it could overwrite that file. By renaming everything to random temporary names first, no final name can collide with an old one. This is a small trick, but it makes the script much safer.</p><p>6. Why the width line?</p><p>The line with width makes the numbers at least three digits (001, 002). If you have more than 999 files, it uses more digits automatically, so the sorting still looks right.</p><p>7. Run it twice</p><p>Run the same command again. The script should still say it renamed 3 files, and you should still see file_001 to file_003. Nothing is lost, because the old names are simply replaced with the same final names.</p><p>8. Safety tips</p><p>- It renames ALL .txt files in the folder, so make a copy of your real folder before you use it.<br>- Run it on the test folder first, as shown above.<br>- If you want to rename another file type, change &quot;.txt&quot; in two places: the filter line and the final rename line.</p><p>When you are done testing, delete the test folder with:</p><p>Remove-Item C:\test_rename -Recurse</p><p>That is the whole script. Small tools like this are a good way to practice Python and to build something you can actually use.</p></article>
+    <div class="share">
+      <strong>Share this post</strong>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-rename-files-in-bulk-with-a-small-python-script-on-windows.html" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-rename-files-in-bulk-with-a-small-python-script-on-windows.html&amp;text=How%20to%20Rename%20Files%20in%20Bulk%20With%20a%20Small%20Python%20Script%20on%20Windows" target="_blank" rel="noopener">X</a>
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-rename-files-in-bulk-with-a-small-python-script-on-windows.html&amp;text=How%20to%20Rename%20Files%20in%20Bulk%20With%20a%20Small%20Python%20Script%20on%20Windows" target="_blank" rel="noopener">Telegram</a>
+      <a href="https://wa.me/?text=How%20to%20Rename%20Files%20in%20Bulk%20With%20a%20Small%20Python%20Script%20on%20Windows%20https%3A%2F%2Fsevengigs.online%2Fposts%2Fhow-to-rename-files-in-bulk-with-a-small-python-script-on-windows.html" target="_blank" rel="noopener">WhatsApp</a>
+      <button type="button" id="copyLink">Copy link</button>
+    </div>
+    <section class="related"><h2>Keep reading</h2>
+      <a class="rel" href="basic-sql-for-beginners-read-and-change-data-in-supabase.html">
+        <span class="tag">Tutorials</span>
+        <span>Basic SQL for Beginners: Read and Change Data in Supabase</span>
+      </a>
+      <a class="rel" href="git-basics-for-beginners-clone-commit-push-and-pull-in-powershell.html">
+        <span class="tag">Tutorials</span>
+        <span>Git Basics for Beginners: Clone, Commit, Push, and Pull in PowerShell</span>
+      </a>
+      <a class="rel" href="how-to-get-your-new-website-into-google-with-search-console.html">
+        <span class="tag">Tutorials</span>
+        <span>How to Get Your New Website Into Google With Search Console</span>
+      </a></section>
+    <div id="continue"></div>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-grid">
+      <div>
+        <a class="logo" href="../index.html"><img class="logo-mark" src="../logo-mark.svg" alt="" width="36" height="36"><span>Seven <b>Gigs</b></span></a>
+        <p>Tips, AI tools, and tutorials for freelancers.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="../index.html">Home</a>
+        <a href="../store.html">Store</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms &amp; Disclaimer</a>
+      </nav>
+    </div>
+    <div class="wrap copy">&copy; <span id="yr">2026</span> Seven Gigs. All rights reserved.</div>
+  </footer>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+    document.getElementById("copyLink").addEventListener("click", async function (e) {
+      var b = e.currentTarget;
+      try { await navigator.clipboard.writeText(location.href.split("#")[0]); b.textContent = "Copied!"; }
+      catch (err) { b.textContent = "Press Ctrl+C to copy the address bar"; }
+      setTimeout(function () { b.textContent = "Copy link"; }, 2000);
+    });
+  </script>
+  <script src="/analytics.js" defer></script>
+  <script src="/reading.js" defer></script>
+  <script src="../menu.js"></script>
+</body>
+</html>
